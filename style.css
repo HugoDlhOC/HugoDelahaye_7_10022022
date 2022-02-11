@@ -1,0 +1,50 @@
+*{
+    font-family: 'DM Sans', sans-serif;
+}
+
+header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 42px;
+}
+
+main{
+    margin: 17px 100px;
+}
+
+header #name-site{
+    font-size: 36px;
+    color: #D04F4F;
+}
+
+#search-field{
+    background-color: #E7E7E7;
+    display: flex;
+    border-radius: 5px;
+    margin-bottom: 25px;
+}
+
+#search-field input{
+    outline: none;
+    border: none;
+    width: 100%;
+    background-color: #E7E7E7;
+    padding: 20px;
+    border-radius: 5px 0px 0px 5px;
+}
+
+#search-field button{
+    outline: none;
+    border: none;
+    background-color: #E7E7E7;
+}
+#search-icon{
+   width: 60px;
+   padding: 20px;
+}
+
+article{
+    border: 2px red solid;
+}
