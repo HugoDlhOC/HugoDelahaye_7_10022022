@@ -47,4 +47,58 @@ header #name-site{
 
 article{
     border: 2px red solid;
+    border-radius: 0px 0px 5px 5px;
+    background-color: #E7E7E7;
+    /*margin: 15px;*/
+}
+
+.col-lg-4{
+    padding: 0;
+}
+
+.place-image-recipe{
+    height: 178px;
+    width: 100%;
+    background-color: #C7BEBE;
+}
+
+.title-time-recipe{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.title-time-recipe img{
+    margin-left: auto;
+    border-radius: 5px 5px 0px 0px;
+}
+
+.title-time-recipe .time{
+    margin-left: 7px;
+    font-size: 18px;
+}
+
+.title-time-recipe .title-recipe{
+    margin-bottom: 0;
+    font-size: 18px;
+}
+
+.ingredients-description-recipe{
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.ingredients-description-recipe .list-ingredients, .description-recipe{
+ font-size: 12px;
+ padding: 0;
+}
+
+.ingredients-description-recipe .list-ingredients{
+    list-style: none;
+}
+
+.ingredients-description-recipe .description-recipe{
+    width: 50%;
 }
