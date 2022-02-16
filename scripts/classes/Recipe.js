@@ -31,15 +31,15 @@ export class Recipe{
         });
         //Ajout de l'HTML
         let recipeCard = document.querySelector(".recipe-card");
-        recipeCard.innerHTML += `<article class="col-lg-4 col-md-6 col-sm-12">
+        recipeCard.innerHTML += `<article class="col-lg-3 col-md-4 col-sm-8 m-3">
         <div class="place-image-recipe"></div>
         <div class="title-time-recipe">
             <p class="title-recipe">${this.name}</p>
-            <img src="./ressources/images/time.svg" alt="horloge">
+            <i class="fa-regular fa-clock"></i>
             <span class="time">${this.time} min</span>
         </div>
         <div class="ingredients-description-recipe">
-            <ul class="list-ingredients">
+            <ul class="list-ingredients mr-2">
                 ${ingredientsHtml}
             </ul>
             <p class="description-recipe">${this.description}</p>
