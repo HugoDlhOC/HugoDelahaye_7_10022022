@@ -126,4 +126,9 @@ article{
         margin-right: -105px;
         margin-left:  -105px;
     }
+
+    #search-field{
+        margin-left: -73px;
+        margin-right: -73px;
+    }
 }
