@@ -19,6 +19,7 @@ header #name-site{
     color: #D04F4F;
 }
 
+/*Champs de recherche principal*/
 #search-field{
     background-color: #E7E7E7;
     display: flex;
@@ -30,7 +31,6 @@ header #name-site{
     outline: none;
     border: none;
     width: 100%;
-    /*max-width: 1100px;*/
     background-color: #E7E7E7;
     padding: 20px;
     border-radius: 5px 0px 0px 5px;
@@ -48,6 +48,67 @@ header #name-site{
    padding: 20px;
 }
 
+/*Champs de recherche secondaire*/
+.section-search nav{
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+}
+
+.sort-menus--link-icon, .sort-menus--link-icon{
+    padding: 10px;
+    align-items: center;
+}
+
+#link-icon-ingredients--hide, #link-icon-ingredients--display{
+    background-color: #3282F7;
+}
+
+#link-icon-machines--hide, #link-icon-machines--display{
+    background-color: #68D9A4;
+}
+
+#link-icon-utensils--hide, #link-icon-utensils--display{
+    background-color: #ED6454;
+}
+
+.sort-menu--link, .sort-menu--link{
+    color: white;
+    font-size: 18px;
+    margin-right: 16px;
+}
+
+.fa-chevron-down, .fa-chevron-up{
+    color: white;
+}
+
+.sort-menu--menu{
+    z-index: 1;
+    position: relative;
+    list-style: none;
+    padding: 0px;
+}
+
+.sort-menu--menu li{
+    color: white;
+    font-size: 18px;
+    padding: 10px;
+    padding-right: 28.5px;
+}
+
+#ingredients-menu-items li{
+    background-color: #3282F7;
+}
+
+#machines-menu-items li{
+    background-color: #68D9A4;
+}
+
+#utensils-menu-items li{
+    background-color: #ED6454;
+}
+
+/*Recettes*/
 .container{
     max-width: none;
 }
@@ -55,6 +116,7 @@ header #name-site{
 .recipe-card{
     margin-right: -175px;
     margin-left:  -175px;
+    margin-top: 100px;
 }
 
 article{
@@ -119,6 +181,19 @@ article{
     overflow: hidden;
     text-overflow: ellipsis;
     /*white-space: nowrap;*/
+}
+
+/*Classes display*/
+.display-flex{
+    display: flex;
+}
+
+.display-block{
+    display: block;
+}
+
+.display-none{
+    display: none;
 }
 
 @media (max-width: 575px){
