@@ -3,18 +3,6 @@ import { Recipe } from "./classes/Recipe.js";
 
 let recipeCard = document.querySelector(".recipe-card");
 
-//Première étape : affichage de toutes les recettes
-console.log(recipes);
-console.log(recipes[0]);
-console.log(recipes.length);
-
-//Pour toutes les recettes, ajout de l'HTML
-recipes.forEach(recipe => {
-    //Création objet recette avec la recette actuelle passée au constructeur
-    const objRecipe = new Recipe(recipe);
-    objRecipe.addHtmlOfRecipes();
-});
-
 //Afficher les menus au clic sur le lien ou l'icone
 //Menu ingrédients
 const linkAndIconIngredientsHideMenu = document.querySelector("#input-icon-ingredients--hide");
@@ -109,6 +97,55 @@ function fctCloseMenuUtensils(){
     inputSortMenuUtensilsDisplay.classList.replace("display-block", "display-none");
 }
 
+//Affichage de toutes les recettes
+console.log(recipes);
+console.log(recipes[0]);
+console.log(recipes.length);
+
+//Pour toutes les recettes, ajout de l'HTML des recettes, ainsi que des éléments des menus secondaires
+let listOfMachines = [];
+let listOfMachinesWithoutDuplicates = [];
+let listOfUtensils = [];
+let listOfUtensilsWithoutDuplicates = [];
+let listOfIngredients = [];
+let listOfIngredientsWithoutDuplicates = [];
+recipes.forEach(recipe => {
+    //Création objet recette avec la recette actuelle passée au constructeur
+    const objRecipe = new Recipe(recipe);
+    objRecipe.addHtmlOfRecipes();
+
+    //Ajout de tous les ingredients dans le tableau, puis suppression des doublons
+    recipe.ingredients.forEach(ingredient => {
+        listOfIngredients.push(ingredient.ingredient);
+    });
+    listOfIngredientsWithoutDuplicates = listOfIngredients.filter((value, index) => {
+        return listOfIngredients.indexOf(value) === index;
+    });
+
+    //Ajout de tous les ustensils dans le tableau, puis suppression des doublons
+    recipe.ustensils.forEach(ustensil => {
+        listOfUtensils.push(ustensil);
+    });
+    listOfUtensilsWithoutDuplicates = listOfUtensils.filter((value, index) => {
+        return listOfUtensils.indexOf(value) === index;
+    });
+
+    //Ajout de tous les appareils dans le tableau, puis suppression des doublons
+    listOfMachines.push(recipe.appliance);
+    listOfMachinesWithoutDuplicates = listOfMachines.filter((value, index) => {
+        return listOfMachines.indexOf(value) === index;
+    });
+});
+
+//Ajout des ingredients dans le menu secondaire
+Recipe.addHtmlSecondaryMenuIngredients(ingredientsMenu, listOfIngredientsWithoutDuplicates);
+
+//Ajout des appareils dans le menu secondaire
+Recipe.addHtmlSecondaryMenuMachines(machinesMenu, listOfMachinesWithoutDuplicates);
+
+//Ajout des ustensils dans le menu secondaire
+Recipe.addHtmlSecondaryMenuUtensils(utensilsMenu, listOfUtensilsWithoutDuplicates);
+
 //Fonctionalitée de tri des recettes via le champs de recherche principale 
 //Récupérer ce qui est tapé dans le champs de saisi
 const mainSearchInput = document.querySelector("#main-search-field");
@@ -170,3 +207,5 @@ function displayGoodRecipe(valueInput){
         objRecipe.addHtmlOfRecipes();
     }
 }
+
+//Fonctionalitée de tri des recettes pour le champs de recherche secondaire Ingrédients 

@@ -47,4 +47,25 @@ export class Recipe{
     </article>`;
 
     }
+
+    static addHtmlSecondaryMenuIngredients(domMenu, listOfIngredients){
+        listOfIngredients.forEach(element => {
+            domMenu.innerHTML += `<li>${element}</li>`;
+            console.log(element);
+        });     
+    }
+
+    static addHtmlSecondaryMenuUtensils(domMenu, listOfUtensils){
+        listOfUtensils.forEach(element => {
+            domMenu.innerHTML += `<li>${element}</li>`;
+            console.log(element);
+        });     
+    }
+
+    static addHtmlSecondaryMenuMachines(domMenu, listOfMachines){
+        listOfMachines.forEach(element => {
+            domMenu.innerHTML += `<li>${element}</li>`;
+            console.log(element);
+        });     
+    }
 }
