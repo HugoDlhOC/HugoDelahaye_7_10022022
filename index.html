@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin=" anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans&display=swap" rel="stylesheet"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="./style.css">
@@ -17,7 +17,7 @@
     <main>
         <section class="section-search">
             <form id="search-field" method="get">
-                <input placeholder="Rechercher une recette" type="text">
+                <input id="main-search-field" placeholder="Rechercher une recette" type="text">
                 <button>
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
@@ -25,14 +25,14 @@
             <nav class="sort-menus">
                 <div id="ingredients-menu">
                     <!--Menu masqué-->
-                    <div id="link-icon-ingredients--hide" class="sort-menus--link-icon display-flex">
-                        <a href="#" id="link-ingredients--hide" class="sort-menu--link display-block">Ingrédients</a>
+                    <div id="input-icon-ingredients--hide" class="sort-menus--input-icon display-flex">
+                        <input type="text" id="input-ingredients--hide" placeholder="Ingrédients">
                         <i id="icon-ingredients--hide" class="fa-solid fa-chevron-down"></i>
                     </div>
 
                     <!--Menu affiché-->
-                    <div id="link-icon-ingredients--display" class="sort-menus--link-icon display-none">
-                        <a href="#" id="link-ingredients--display" class="sort-menu--link">Ingrédients</a>
+                    <div id="input-icon-ingredients--display" class="sort-menus--input-icon display-none">
+                        <input type="text" id="input-ingredients--display" placeholder="Ingrédients">
                         <i id="icon-ingredients--display" class="fa-solid fa-chevron-up"></i>
                     </div>
                     <ul id="ingredients-menu-items" class="sort-menu--menu display-none">
@@ -44,14 +44,14 @@
 
                 <div id="machines-menu">
                     <!--Menu masqué-->
-                    <div id="link-icon-machines--hide" class="sort-menus--link-icon display-flex">
-                        <a href="#" id="link-machines--hide" class="sort-menu--link display-block">Appareils</a>
+                    <div id="input-icon-machines--hide" class="sort-menus--input-icon display-flex">
+                        <input type="text" id="input-machines--hide" placeholder="Appareils">
                         <i id="icon-machines--hide" class="fa-solid fa-chevron-down"></i>
                     </div>
 
                     <!--Menu affiché-->
-                    <div id="link-icon-machines--display" class="sort-menus--link-icon display-none">
-                        <a href="#" id="link-machines--display" class="sort-menu--link">Appareils</a>
+                    <div id="input-icon-machines--display" class="sort-menus--input-icon display-none">
+                        <input type="text" id="input-machines--display" placeholder="Appareils">
                         <i id="icon-machines--display" class="fa-solid fa-chevron-up"></i>
                     </div>
                     <ul id="machines-menu-items" class="sort-menu--menu display-none">
@@ -63,14 +63,14 @@
 
                 <div id="utensils-menu">
                     <!--Menu masqué-->
-                    <div id="link-icon-utensils--hide" class="sort-menus--link-icon display-flex">
-                        <a href="#" id="link-utensils--hide" class="sort-menu--link display-block">Ustensils</a>
+                    <div id="input-icon-utensils--hide" class="sort-menus--input-icon display-flex">
+                        <input type="text" id="input-utensils--hide" placeholder="Ustensils">
                         <i id="icon-utensils--hide" class="fa-solid fa-chevron-down"></i>
                     </div>
 
                     <!--Menu affiché-->
-                    <div id="link-icon-utensils--display" class="sort-menus--link-icon display-none">
-                        <a href="#" id="link-utensils--display" class="sort-menu--link">Ustensils</a>
+                    <div id="input-icon-utensils--display" class="sort-menus--input-icon display-none">
+                        <input type="text" id="input-utensils--display" placeholder="Ustensils">
                         <i id="icon-utensils--display" class="fa-solid fa-chevron-up"></i>
                     </div>
                     <ul id="utensils-menu-items" class="sort-menu--menu display-none">

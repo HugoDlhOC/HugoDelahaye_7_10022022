@@ -55,20 +55,39 @@ header #name-site{
     position: absolute;
 }
 
-.sort-menus--link-icon, .sort-menus--link-icon{
+.sort-menus ul{
+    margin-bottom: 0;
+    border-radius: 0px 0px 5px 5px;
+}
+
+.sort-menus--input-icon{
     padding: 10px;
+    border-radius: 5px;
+    margin-right: 20px;
     align-items: center;
 }
 
-#link-icon-ingredients--hide, #link-icon-ingredients--display{
+.sort-menus input{
+    border: none;
+    outline: none;
+    color: white;
+}
+
+.sort-menus input::placeholder{
+    font-size: 18px;
+    color: white;
+}
+
+
+#input-icon-ingredients--hide, #input-icon-ingredients--display, #input-ingredients--hide, #input-ingredients--display{
     background-color: #3282F7;
 }
 
-#link-icon-machines--hide, #link-icon-machines--display{
+#input-icon-machines--hide, #input-icon-machines--display, #input-machines--hide, #input-machines--display{
     background-color: #68D9A4;
 }
 
-#link-icon-utensils--hide, #link-icon-utensils--display{
+#input-icon-utensils--hide, #input-icon-utensils--display, #input-utensils--hide, #input-utensils--display{
     background-color: #ED6454;
 }
 
