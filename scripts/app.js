@@ -109,6 +109,7 @@ let listOfUtensils = [];
 let listOfUtensilsWithoutDuplicates = [];
 let listOfIngredients = [];
 let listOfIngredientsWithoutDuplicates = [];
+
 recipes.forEach(recipe => {
     //Création objet recette avec la recette actuelle passée au constructeur
     const objRecipe = new Recipe(recipe);
@@ -203,9 +204,31 @@ function displayGoodRecipe(valueInput){
     recipeCard.innerHTML = "";
     for(let v = 0; v < tabResults.length; v++){
         const objRecipe = new Recipe(recipes[tabResults[v]]);
-        //console.log(recipes[tabResults[v]]);
         objRecipe.addHtmlOfRecipes();
     }
 }
 
 //Fonctionalitée de tri des recettes pour le champs de recherche secondaire Ingrédients 
+inputSortMenuIngredientsDisplay.addEventListener("input", fctSecondarySearchSortIngredients);
+
+function fctSecondarySearchSortIngredients(e){
+    //Supprimer les éléments qui ne correspondent pas à ce qui est saisi
+    let tabIndexOfItemsMatch = []; //Tableau qui va contenir les ingrédients correspondants
+    listOfIngredientsWithoutDuplicates.forEach((ingredient, index) => {
+        if(ingredient.includes(e.target.value) === true){
+            console.log(ingredient + e.target.value);
+            tabIndexOfItemsMatch.push(index);
+        }
+    });
+
+    //Le but maintenant est d'afficher les ingrédients correspondant avec un tab contenant la nouvelle liste d'ingrédients
+    let newListOfIngredients = [];
+    
+    for(let i = 0; i < tabIndexOfItemsMatch.length; i++){
+        newListOfIngredients.push(listOfIngredientsWithoutDuplicates[tabIndexOfItemsMatch[i]]);
+    }
+
+    ingredientsMenu.innerHTML = "";
+
+    Recipe.addHtmlSecondaryMenuIngredients(ingredientsMenu, newListOfIngredients)
+}

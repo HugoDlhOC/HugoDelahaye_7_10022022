@@ -78,6 +78,9 @@ header #name-site{
     color: white;
 }
 
+#input-ingredients--display::placeholder, #input-machines--display::placeholder, #input-utensils--display::placeholder{
+    opacity: 0.5;
+}
 
 #input-icon-ingredients--hide, #input-icon-ingredients--display, #input-ingredients--hide, #input-ingredients--display{
     background-color: #3282F7;
