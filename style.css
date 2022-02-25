@@ -60,6 +60,11 @@ header #name-site{
     border-radius: 0px 0px 5px 5px;
 }
 
+.sort-menus ul li a{
+    text-decoration: none;
+    color: white;
+}
+
 .sort-menus--input-icon{
     padding: 10px;
     border-radius: 5px;
@@ -128,6 +133,50 @@ header #name-site{
 
 #utensils-menu-items li{
     background-color: #ED6454;
+}
+
+/*Tags recherche recondaire*/
+.tags-container{
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 5px;
+}
+
+.tags-container .tag{
+    /*display: flex;*/
+    
+    padding: 10px 20px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.ingredient-tag, .ingredient-tag button{
+    background-color: #3282F7;
+}
+
+.machine-tag, .machine-tag button{
+    background-color: #68D9A4;
+}
+
+.utensil-tag, .utensil-tag button{
+    background-color: #ED6454;
+}
+
+.tag span{
+    margin-right: 10px;
+    color: white;
+}
+
+.tag button{
+    border: none;
+    outline: none;
+}
+
+.tag button i{
+    color: white;
 }
 
 /*Recettes*/

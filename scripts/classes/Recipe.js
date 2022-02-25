@@ -11,7 +11,7 @@ export class Recipe{
         this.ustensils = data.ustensils;
     }
 
-    addHtmlOfRecipes(){
+    addHtmlOfRecipe(){
         //console.log(this.ingredients);
         let ingredientsHtml = "";
         this.ingredients.forEach(ingredient => {
@@ -48,24 +48,20 @@ export class Recipe{
 
     }
 
-    static addHtmlSecondaryMenuIngredients(domMenu, listOfIngredients){
-        listOfIngredients.forEach(element => {
-            domMenu.innerHTML += `<li>${element}</li>`;
-            console.log(element);
+    static addHtmlSecondaryMenuElements(domMenu, listOfElements, typeOfMenu){
+        listOfElements.forEach(element => {
+            domMenu.innerHTML += `<li class="${typeOfMenu} display-block"><a href="#">${element}</a></li>`;
         });     
     }
 
-    static addHtmlSecondaryMenuUtensils(domMenu, listOfUtensils){
-        listOfUtensils.forEach(element => {
-            domMenu.innerHTML += `<li>${element}</li>`;
-            console.log(element);
-        });     
-    }
-
-    static addHtmlSecondaryMenuMachines(domMenu, listOfMachines){
-        listOfMachines.forEach(element => {
-            domMenu.innerHTML += `<li>${element}</li>`;
-            console.log(element);
-        });     
+    static addHtmlOfTags(domElement, listOfElements, typeOfTag){
+        listOfElements.forEach(element => {
+            domElement.innerHTML += `<div class="tag ${typeOfTag} display-none">
+                <span>${element}</span>
+                <button class="delete-tag-btn">
+                    <i class="fa-regular fa-circle-xmark"></i>
+                </button>
+                </div>`
+        });
     }
 }

@@ -3,99 +3,46 @@ import { Recipe } from "./classes/Recipe.js";
 
 let recipeCard = document.querySelector(".recipe-card");
 
+function addEventDisplayCloseSecondaryMenu(nameOfMenu){
+    const linkAndIconHideMenu = document.querySelector(`#input-icon-${nameOfMenu}--hide`);
+    const linkAndIconDisplayMenu = document.querySelector(`#input-icon-${nameOfMenu}--display`);
+    const inputSortMenuHide = document.querySelector(`#input-${nameOfMenu}--hide`);
+    const inputSortMenuDisplay = document.querySelector(`#input-${nameOfMenu}--display`);
+    const iconSortMenuHide = document.querySelector(`#icon-${nameOfMenu}--hide`);
+    const iconSortMenuDisplay = document.querySelector(`#icon-${nameOfMenu}--display`);
+    const menu = document.querySelector(`#${nameOfMenu}-menu-items`);  
+
+    inputSortMenuHide.addEventListener("click", fctOpenMenu);
+    iconSortMenuHide.addEventListener("click", fctOpenMenu);
+    inputSortMenuDisplay.addEventListener("click", fctCloseMenu);
+    iconSortMenuDisplay.addEventListener("click", fctCloseMenu);
+
+    function fctOpenMenu(){
+        menu.classList.replace("display-none", "display-block");
+        linkAndIconHideMenu.classList.replace("display-flex", "display-none");
+        linkAndIconDisplayMenu.classList.replace("display-none", "display-block");
+        inputSortMenuHide.classList.replace("display-block", "display-none");
+        inputSortMenuDisplay.classList.replace("display-none", "display-block");
+        inputSortMenuDisplay.focus();
+    }
+
+    function fctCloseMenu(){
+        menu.classList.replace("display-block", "display-none");
+        linkAndIconHideMenu.classList.replace("display-none", "display-flex");
+        linkAndIconDisplayMenu.classList.replace("display-block", "display-none");
+        inputSortMenuHide.classList.replace("display-none", "display-block");
+        inputSortMenuDisplay.classList.replace("display-block", "display-none");
+    }
+}
 //Afficher les menus au clic sur le lien ou l'icone
 //Menu ingrédients
-const linkAndIconIngredientsHideMenu = document.querySelector("#input-icon-ingredients--hide");
-const linkAndIconIngredientsDisplayMenu = document.querySelector("#input-icon-ingredients--display");
-const inputSortMenuIngredientsHide = document.querySelector("#input-ingredients--hide");
-const inputSortMenuIngredientsDisplay = document.querySelector("#input-ingredients--display");
-const iconSortMenuIngredientsHide = document.querySelector("#icon-ingredients--hide");
-const iconSortMenuIngredientsDisplay = document.querySelector("#icon-ingredients--display");
-const ingredientsMenu = document.querySelector("#ingredients-menu-items");
-
-inputSortMenuIngredientsHide.addEventListener("click", fctOpenMenuIngredients);
-iconSortMenuIngredientsHide.addEventListener("click", fctOpenMenuIngredients);
-inputSortMenuIngredientsDisplay.addEventListener("click", fctCloseMenuIngredients);
-iconSortMenuIngredientsDisplay.addEventListener("click", fctCloseMenuIngredients);
-
-function fctOpenMenuIngredients(){
-    ingredientsMenu.classList.replace("display-none", "display-block");
-    linkAndIconIngredientsHideMenu.classList.replace("display-flex", "display-none");
-    linkAndIconIngredientsDisplayMenu.classList.replace("display-none", "display-block");
-    inputSortMenuIngredientsHide.classList.replace("display-block", "display-none");
-    inputSortMenuIngredientsDisplay.classList.replace("display-none", "display-block");
-    inputSortMenuIngredientsDisplay.focus();
-}
-
-function fctCloseMenuIngredients(){
-    ingredientsMenu.classList.replace("display-block", "display-none");
-    linkAndIconIngredientsHideMenu.classList.replace("display-none", "display-flex");
-    linkAndIconIngredientsDisplayMenu.classList.replace("display-block", "display-none");
-    inputSortMenuIngredientsHide.classList.replace("display-none", "display-block");
-    inputSortMenuIngredientsDisplay.classList.replace("display-block", "display-none");
-}
+addEventDisplayCloseSecondaryMenu("ingredients");
 
 //Menu appareils
-const linkAndIconMachinesHideMenu = document.querySelector("#input-icon-machines--hide");
-const linkAndIconMachinesDisplayMenu = document.querySelector("#input-icon-machines--display");
-const inputSortMenuMachinesHide = document.querySelector("#input-machines--hide");
-const inputSortMenuMachinesDisplay = document.querySelector("#input-machines--display");
-const iconSortMenuMachinesHide = document.querySelector("#icon-machines--hide");
-const iconSortMenuMachinesDisplay = document.querySelector("#icon-machines--display");
-const machinesMenu = document.querySelector("#machines-menu-items");
-
-inputSortMenuMachinesHide.addEventListener("click", fctOpenMenuMachines);
-iconSortMenuMachinesHide.addEventListener("click", fctOpenMenuMachines);
-inputSortMenuMachinesDisplay.addEventListener("click", fctCloseMenuMachines);
-iconSortMenuMachinesDisplay.addEventListener("click", fctCloseMenuMachines);
-
-function fctOpenMenuMachines(){
-    machinesMenu.classList.replace("display-none", "display-block");
-    linkAndIconMachinesHideMenu.classList.replace("display-flex", "display-none");
-    linkAndIconMachinesDisplayMenu.classList.replace("display-none", "display-block");
-    inputSortMenuMachinesHide.classList.replace("display-block", "display-none");
-    inputSortMenuMachinesDisplay.classList.replace("display-none", "display-block");
-    inputSortMenuMachinesDisplay.focus();
-}
-
-function fctCloseMenuMachines(){
-    machinesMenu.classList.replace("display-block", "display-none");
-    linkAndIconMachinesHideMenu.classList.replace("display-none", "display-flex");
-    linkAndIconMachinesDisplayMenu.classList.replace("display-block", "display-none");
-    inputSortMenuMachinesHide.classList.replace("display-none", "display-block");
-    inputSortMenuMachinesDisplay.classList.replace("display-block", "display-none");
-}
+addEventDisplayCloseSecondaryMenu("machines");
 
 //Menu ustentils
-const linkAndIconUtensilsHideMenu = document.querySelector("#input-icon-utensils--hide");
-const linkAndIconUtensilsDisplayMenu = document.querySelector("#input-icon-utensils--display");
-const inputSortMenuUtensilsHide = document.querySelector("#input-utensils--hide");
-const inputSortMenuUtensilsDisplay = document.querySelector("#input-utensils--display");
-const iconSortMenuUtensilsHide = document.querySelector("#icon-utensils--hide");
-const iconSortMenuUtensilsDisplay = document.querySelector("#icon-utensils--display");
-const utensilsMenu = document.querySelector("#utensils-menu-items");
-
-inputSortMenuUtensilsHide.addEventListener("click", fctOpenMenuUtensils);
-iconSortMenuUtensilsHide.addEventListener("click", fctOpenMenuUtensils);
-inputSortMenuUtensilsDisplay.addEventListener("click", fctCloseMenuUtensils);
-iconSortMenuUtensilsDisplay.addEventListener("click", fctCloseMenuUtensils);
-
-function fctOpenMenuUtensils(){
-    utensilsMenu.classList.replace("display-none", "display-block");
-    linkAndIconUtensilsHideMenu.classList.replace("display-flex", "display-none");
-    linkAndIconUtensilsDisplayMenu.classList.replace("display-none", "display-block");
-    inputSortMenuUtensilsHide.classList.replace("display-block", "display-none");
-    inputSortMenuUtensilsDisplay.classList.replace("display-none", "display-block");
-    inputSortMenuUtensilsDisplay.focus();
-}
-
-function fctCloseMenuUtensils(){
-    utensilsMenu.classList.replace("display-block", "display-none");
-    linkAndIconUtensilsHideMenu.classList.replace("display-none", "display-flex");
-    linkAndIconUtensilsDisplayMenu.classList.replace("display-block", "display-none");
-    inputSortMenuUtensilsHide.classList.replace("display-none", "display-block");
-    inputSortMenuUtensilsDisplay.classList.replace("display-block", "display-none");
-}
+addEventDisplayCloseSecondaryMenu("utensils");
 
 //Affichage de toutes les recettes
 console.log(recipes);
@@ -103,49 +50,55 @@ console.log(recipes[0]);
 console.log(recipes.length);
 
 //Pour toutes les recettes, ajout de l'HTML des recettes, ainsi que des éléments des menus secondaires
-let listOfMachines = [];
-let listOfMachinesWithoutDuplicates = [];
-let listOfUtensils = [];
-let listOfUtensilsWithoutDuplicates = [];
-let listOfIngredients = [];
-let listOfIngredientsWithoutDuplicates = [];
+let collectionOfIngredients = new Set();
+let tabOfIngredients = [];
+let collectionOfMachines = new Set();
+let tabOfMachines = [];
+let collectionOfUtensils = new Set();
+let tabOfUtensils = [];
 
 recipes.forEach(recipe => {
     //Création objet recette avec la recette actuelle passée au constructeur
     const objRecipe = new Recipe(recipe);
-    objRecipe.addHtmlOfRecipes();
+    objRecipe.addHtmlOfRecipe();
 
-    //Ajout de tous les ingredients dans le tableau, puis suppression des doublons
+    //Ajout de tous les ingredients dans la collection de valeur, puis conversion de la collection en tab
     recipe.ingredients.forEach(ingredient => {
-        listOfIngredients.push(ingredient.ingredient);
+        collectionOfIngredients.add(ingredient.ingredient);
     });
-    listOfIngredientsWithoutDuplicates = listOfIngredients.filter((value, index) => {
-        return listOfIngredients.indexOf(value) === index;
-    });
+    tabOfIngredients = Array.from(collectionOfIngredients);
 
-    //Ajout de tous les ustensils dans le tableau, puis suppression des doublons
+    //Ajout de tous les appareils dans la collection de valeur, puis conversion de la collection en tab
+    collectionOfMachines.add(recipe.appliance);
+    tabOfMachines = Array.from(collectionOfMachines);
+
+    //Ajout de tous les ustensils dans la collection de valeur,  puis conversion de la collection en tab
     recipe.ustensils.forEach(ustensil => {
-        listOfUtensils.push(ustensil);
+        collectionOfUtensils.add(ustensil);
     });
-    listOfUtensilsWithoutDuplicates = listOfUtensils.filter((value, index) => {
-        return listOfUtensils.indexOf(value) === index;
-    });
-
-    //Ajout de tous les appareils dans le tableau, puis suppression des doublons
-    listOfMachines.push(recipe.appliance);
-    listOfMachinesWithoutDuplicates = listOfMachines.filter((value, index) => {
-        return listOfMachines.indexOf(value) === index;
-    });
+    tabOfUtensils = Array.from(collectionOfUtensils);
 });
 
 //Ajout des ingredients dans le menu secondaire
-Recipe.addHtmlSecondaryMenuIngredients(ingredientsMenu, listOfIngredientsWithoutDuplicates);
+const ingredientsMenu = document.querySelector(`#ingredients-menu-items`);
+Recipe.addHtmlSecondaryMenuElements(ingredientsMenu, tabOfIngredients, "ingredient");
 
 //Ajout des appareils dans le menu secondaire
-Recipe.addHtmlSecondaryMenuMachines(machinesMenu, listOfMachinesWithoutDuplicates);
+const machinesMenu = document.querySelector(`#machines-menu-items`);
+Recipe.addHtmlSecondaryMenuElements(machinesMenu, tabOfMachines, "machine");
 
 //Ajout des ustensils dans le menu secondaire
-Recipe.addHtmlSecondaryMenuUtensils(utensilsMenu, listOfUtensilsWithoutDuplicates);
+const utensilsMenu = document.querySelector(`#utensils-menu-items`);
+Recipe.addHtmlSecondaryMenuElements(utensilsMenu, tabOfUtensils, "utensil");
+
+//Ajouter tous l'HTML des tags
+const tagsContainer = document.querySelector(".tags-container");
+//Menu ingrédients
+Recipe.addHtmlOfTags(tagsContainer, tabOfIngredients, "ingredient-tag");
+//Menu appareils
+Recipe.addHtmlOfTags(tagsContainer, tabOfMachines, "machine-tag");
+//Menu appareils
+Recipe.addHtmlOfTags(tagsContainer, tabOfUtensils, "utensil-tag");
 
 //Fonctionalitée de tri des recettes via le champs de recherche principale 
 //Récupérer ce qui est tapé dans le champs de saisi
@@ -155,80 +108,304 @@ mainSearchInput.addEventListener("input", fctSearchSortRecipes);
 
 //Déclancher la recherche uniquement quand le nombre de caractère tapé par l'utilisateur est supérieur a 2
 function fctSearchSortRecipes(e){
-    if(e.target.value.length > 2){
-        console.log(e.target.value);
+    let inputUser = e.target.value;
+
+    if(inputUser.trim().toLowerCase().length > 2){
         //FCT a exécuter
-        displayGoodRecipe(e.target.value);
+        displayGoodRecipe(inputUser.trim().toLowerCase());
     }
     else{
-        //Sinon, toutes les recettes sont affichées
-        recipeCard.innerHTML = "";
-        for(let a = 0; a < recipes.length; a++){
-            const objRecipe = new Recipe(recipes[a]);
-            objRecipe.addHtmlOfRecipes();
+        //Sinon, toutes les recettes, contenus de menu secondaire sont affichées
+        document.querySelectorAll(".recipe-card article").forEach(article => {
+            article.classList.replace("display-none", "display-block");
+            console.log(article);
+        });
+
+        //Ingrédients
+        for(let i = 0; i < ingredientsItems.length; i++){
+            ingredientsItems[i].classList.remove("display-none");
+            ingredientsItems[i].classList.add("display-block");
+        }
+
+        //Appareils
+        for(let i = 0; i < machinesItems.length; i++){
+            machinesItems[i].classList.remove("display-none");
+            machinesItems[i].classList.add("display-block");
+        }
+
+        //Ustensiles
+        for(let i = 0; i < utensilsItems.length; i++){
+            utensilsItems[i].classList.remove("display-none");
+            utensilsItems[i].classList.add("display-block");
         }
     }
 }
+let tabIngredientsPrimarySearchRecipe = [];
+let collectionIngredientsPrimarySearchRecipe = new Set();
+let tabMachinesPrimarySearchRecipe = [];
+let collectionMachinesPrimarySearchRecipe = new Set();
+let tabUtensilsPrimarySearchRecipe = [];
+let collectionUtensilsPrimarySearchRecipe = new Set();
+
+let ingredientsItems = document.querySelectorAll(".ingredient"); 
+let machinesItems = document.querySelectorAll(".machine");
+let utensilsItems = document.querySelectorAll(".utensil");
+let ingredientsItemsLinks = document.querySelectorAll(".ingredient a"); 
+let machinesItemsLinks = document.querySelectorAll(".machine a");
+let utensilsItemsLinks = document.querySelectorAll(".utensil a");
+console.log(ingredientsItems);
 
 function displayGoodRecipe(valueInput){
     let tabResults = [];
     for(let i = 0; i < recipes.length; i++){
-        //console.log(recipes[i].ingredients);
-    
+    let ifValueFind = false;    //Permet d'éviter les doublons
         //Controle noms
-        if(recipes[i].name.includes(valueInput)){
-            console.log(`NOM INCLU valeur : --${i}--` + recipes[i].name);
-            tabResults.push(i);
-            console.log(tabResults);
+        if(ifValueFind === false){
+            if(recipes[i].name.toLowerCase().includes(valueInput)){
+                console.log(`NOM INCLU valeur : --${i}--` + recipes[i].name);
+                tabResults.push(i);
+                console.log(tabResults);
+                ifValueFind = true;
+            }
         }
 
         //Controle ingredients
-        for(let j = 0; j < recipes[i].ingredients.length; j++){
-            //console.log(recipes[i].ingredients[j]);
-            if(recipes[i].ingredients[j].ingredient.includes(valueInput)){
-                console.log(`INGREDIENT INCLU valeur : --${i}--` + recipes[i].ingredients[j].ingredient);
-                tabResults.push(i);
-                console.log(tabResults);
+        if(ifValueFind === false){
+            for(let j = 0; j < recipes[i].ingredients.length; j++){
+                //console.log(recipes[i].ingredients[j]);
+                if(recipes[i].ingredients[j].ingredient.toLowerCase().includes(valueInput)){
+                    console.log(`INGREDIENT INCLU valeur : --${i}--` + recipes[i].ingredients[j].ingredient);
+                    tabResults.push(i);
+                    console.log(tabResults);
+                    ifValueFind = true;
+                }
             }
         }
 
         //Controle description
-        if(recipes[i].description.includes(valueInput)){
-            console.log(`DESCRIPTION INCLUE valeur : --${i}--` + recipes[i].name);
-            tabResults.push(i);
-            console.log(tabResults);
+        if(ifValueFind === false){
+            if(recipes[i].description.toLowerCase().includes(valueInput)){
+                console.log(`DESCRIPTION INCLUE valeur : --${i}--` + recipes[i].name);
+                tabResults.push(i);
+                console.log(tabResults);
+                ifValueFind = true;
+            }
         }
     }
 
     //Affichage des bonnes recettes
-    recipeCard.innerHTML = "";
-    for(let v = 0; v < tabResults.length; v++){
-        const objRecipe = new Recipe(recipes[tabResults[v]]);
-        objRecipe.addHtmlOfRecipes();
-    }
-}
+    //Tous les articles passent en display none
+    document.querySelectorAll(".recipe-card article").forEach(article => {
+        article.classList.remove("display-block");
+        article.classList.add("class", "display-none");
+        console.log(article);
+    });
+    //Seules les bonnes recettes sont affichées
+    tabResults.forEach(value => { //value correspond a la valeur/numéro de l'article a afficher
+        document.querySelectorAll(".recipe-card article")[value].classList.replace("display-none", "display-block");
+    });
 
-//Fonctionalitée de tri des recettes pour le champs de recherche secondaire Ingrédients 
-inputSortMenuIngredientsDisplay.addEventListener("input", fctSecondarySearchSortIngredients);
-
-function fctSecondarySearchSortIngredients(e){
-    //Supprimer les éléments qui ne correspondent pas à ce qui est saisi
-    let tabIndexOfItemsMatch = []; //Tableau qui va contenir les ingrédients correspondants
-    listOfIngredientsWithoutDuplicates.forEach((ingredient, index) => {
-        if(ingredient.includes(e.target.value) === true){
-            console.log(ingredient + e.target.value);
-            tabIndexOfItemsMatch.push(index);
+    //Récupération de tous les ingrédients 
+    collectionIngredientsPrimarySearchRecipe.clear();
+    tabResults.forEach(value => {
+        for(let i = 0; i < recipes[value].ingredients.length; i++){
+            collectionIngredientsPrimarySearchRecipe.add(recipes[value].ingredients[i].ingredient);
         }
     });
 
-    //Le but maintenant est d'afficher les ingrédients correspondant avec un tab contenant la nouvelle liste d'ingrédients
-    let newListOfIngredients = [];
-    
-    for(let i = 0; i < tabIndexOfItemsMatch.length; i++){
-        newListOfIngredients.push(listOfIngredientsWithoutDuplicates[tabIndexOfItemsMatch[i]]);
+    //Récupération de tous les appareils
+    collectionMachinesPrimarySearchRecipe.clear();
+    tabResults.forEach(value => {
+        collectionMachinesPrimarySearchRecipe.add(recipes[value].appliance);
+    });
+
+    //Récupération de tous les ustensils
+    collectionUtensilsPrimarySearchRecipe.clear();
+    tabResults.forEach(value => {
+        for(let i = 0; i < recipes[value].ustensils.length; i++){
+            collectionUtensilsPrimarySearchRecipe.add(recipes[value].ustensils[i]);
+        }
+    });
+
+    //Ne plus afficher les ingrédients/machines/ustentils qui ne sont pas contenu dans les recettes recherchées au champs de recherche principal
+    //Ingrédients
+    for(let i = 0; i < ingredientsItems.length; i++){
+        ingredientsItems[i].classList.replace("display-block", "display-none");
     }
+    Array.from(collectionIngredientsPrimarySearchRecipe).forEach(ingredient => {
+        for(let i = 0; i < ingredientsItems.length; i++){
+            if(ingredientsItemsLinks[i].innerHTML === ingredient){
+                //Afficher les ingrédients concernés
+                ingredientsItems[i].classList.replace("display-none", "display-block");
+            }
+        }
+    });
 
-    ingredientsMenu.innerHTML = "";
+    //Appareils
+    for(let i = 0; i < machinesItems.length; i++){
+        machinesItems[i].classList.replace("display-block", "display-none");
+    }
+    Array.from(collectionMachinesPrimarySearchRecipe).forEach(machine => {
+        for(let i = 0; i < machinesItems.length; i++){
+            if(machinesItemsLinks[i].innerHTML === machine){
+                //Afficher les ingrédients concernés
+                machinesItems[i].classList.replace("display-none", "display-block");
+            }
+        }
+    });
 
-    Recipe.addHtmlSecondaryMenuIngredients(ingredientsMenu, newListOfIngredients)
+    //Ustensiles
+    for(let i = 0; i < utensilsItems.length; i++){
+        utensilsItems[i].classList.replace("display-block", "display-none");
+    }
+    Array.from(collectionUtensilsPrimarySearchRecipe).forEach(utensil => {
+        for(let i = 0; i < utensilsItems.length; i++){
+            if(utensilsItemsLinks[i].innerHTML === utensil){
+                //Afficher les ingrédients concernés
+                utensilsItems[i].classList.replace("display-none", "display-block");
+            }
+        }
+    });
+}
+
+//Fonctionalitée de tri des recettes pour le champs de recherche secondaire Ingrédients 
+const inputSortMenuIngredientsDisplay = document.querySelector(`#input-ingredients--display`);
+const inputSortMenuMachinesDisplay = document.querySelector(`#input-machines--display`);
+const inputSortMenuUtensilsDisplay = document.querySelector(`#input-utensils--display`);
+inputSortMenuIngredientsDisplay.addEventListener("input", fctSecondarySearchSortIngredients);
+inputSortMenuMachinesDisplay.addEventListener("input", fctSecondarySearchSortMachines);
+inputSortMenuUtensilsDisplay.addEventListener("input", fctSecondarySearchSortUtensils);
+
+function fctSecondarySearchSortIngredients(e){
+    //Récupérer les éléments a masquer (qui ne correspondent pas à ce qui est saisi)
+    const ingredientsItemsDisplay = document.getElementsByClassName("ingredient display-block");
+    let inputUser = e.target.value.trim();
+
+    //Masquer tous les autres éléments
+    for(let i = 0; i < ingredientsItemsDisplay.length; i++){
+        ingredientsItemsDisplay[i].classList.add("display-none");
+    }
+    
+    //Le but maintenant est de masquer les éléments qui ne correspondent pas a ce qui a été recherché
+    for(let i = 0; i < ingredientsItemsDisplay.length; i++){
+        //console.log(ingredientsItemsDisplay[i].children[0].innerHTML);
+        if(ingredientsItemsLinks[i].innerHTML.toLowerCase().includes(inputUser)){
+            console.log("ça correspond");
+            console.log(ingredientsItemsDisplay);
+            ingredientsItemsDisplay[i].classList.remove("display-none");
+        }
+    }
+}
+
+function fctSecondarySearchSortMachines(e){
+    //Récupérer les éléments a masquer (qui ne correspondent pas à ce qui est saisi)
+    const machinesItemsDisplay = document.getElementsByClassName("machine display-block");
+    let inputUser = e.target.value.trim();
+
+    //Masquer tous les autres éléments
+    for(let i = 0; i < machinesItemsDisplay.length; i++){
+        machinesItemsDisplay[i].classList.add("display-none");
+    }
+    
+    //Le but maintenant est de masquer les éléments qui ne correspondent pas a ce qui a été recherché
+    for(let i = 0; i < machinesItemsDisplay.length; i++){
+        if(machinesItemsLinks[i].innerHTML.toLowerCase().includes(inputUser)){
+            console.log("ça correspond");
+            console.log(machinesItemsDisplay);
+            machinesItemsDisplay[i].classList.remove("display-none");
+        }
+    }
+}
+
+function fctSecondarySearchSortUtensils(e){
+    //Récupérer les éléments a masquer (qui ne correspondent pas à ce qui est saisi)
+    const utensilsItemsDisplay = document.getElementsByClassName("utensil display-block");
+    let inputUser = e.target.value.trim();
+
+    //Masquer tous les autres éléments
+    for(let i = 0; i < utensilsItemsDisplay.length; i++){
+        utensilsItemsDisplay[i].classList.add("display-none");
+    }
+    
+    //Le but maintenant est de masquer les éléments qui ne correspondent pas a ce qui a été recherché
+    for(let i = 0; i < utensilsItemsDisplay.length; i++){
+        if(utensilsItemsLinks[i].innerHTML.toLowerCase().includes(inputUser)){
+            console.log("ça correspond");
+            console.log(utensilsItemsDisplay);
+            utensilsItemsDisplay[i].classList.remove("display-none");
+        }
+    }
+}
+
+//Ajouter un évènement click sur chacun des liens contenus dans les menus secondaires
+//Menu ingrédients
+const tagsIngredientsDiv = document.querySelectorAll(".ingredient-tag");
+const tagsIngredientsSpan = document.querySelectorAll(".ingredient-tag span");
+console.log(tagsIngredientsDiv);
+
+ingredientsItemsLinks.forEach(link => {
+    link.addEventListener("click", fctCompareIngredientsTags);
+});
+
+function fctCompareIngredientsTags(e){
+    console.log(e.target.innerHTML);
+    for(let i = 0; i < tagsIngredientsSpan.length; i++){
+        if(e.target.innerHTML === tagsIngredientsSpan[i].innerHTML){
+            //Afficher tag correspondant
+            tagsIngredientsDiv[i].classList.replace("display-none", "display-flex");
+        }
+        console.log(tagsIngredientsSpan[i].innerHTML);
+    }
+}
+
+//Menu appareils
+const tagsMachinesDiv = document.querySelectorAll(".machine-tag");
+const tagsMachinesSpan = document.querySelectorAll(".machine-tag span");
+console.log(tagsMachinesDiv);
+
+machinesItemsLinks.forEach(link => {
+    link.addEventListener("click", fctCompareMachinesTags);
+});
+
+function fctCompareMachinesTags(e){
+    console.log(e.target.innerHTML);
+    for(let i = 0; i < tagsMachinesSpan.length; i++){
+        if(e.target.innerHTML === tagsMachinesSpan[i].innerHTML){
+            //Afficher tag correspondant
+            tagsMachinesDiv[i].classList.replace("display-none", "display-flex");
+        }
+        console.log(tagsMachinesSpan[i].innerHTML);
+    }
+}
+
+//Menu ustensiles
+const tagsUtensilsDiv = document.querySelectorAll(".utensil-tag");
+const tagsUtensilsSpan = document.querySelectorAll(".utensil-tag span");
+console.log(tagsUtensilsDiv);
+
+utensilsItemsLinks.forEach(link => {
+    link.addEventListener("click", fctCompareUtensilsTags);
+});
+
+function fctCompareUtensilsTags(e){
+    console.log(e.target.innerHTML);
+    for(let i = 0; i < tagsUtensilsSpan.length; i++){
+        if(e.target.innerHTML === tagsUtensilsSpan[i].innerHTML){
+            //Afficher tag correspondant
+            tagsUtensilsDiv[i].classList.replace("display-none", "display-flex");
+        }
+        console.log(tagsUtensilsSpan[i].innerHTML);
+    }
+}
+
+//Suppression du tag
+const tagsDeleteBtn = document.querySelectorAll(".delete-tag-btn");
+console.log(tagsDeleteBtn);
+tagsDeleteBtn.forEach(btn => {
+    btn.addEventListener("click", fctDeleteTag);
+});
+
+function fctDeleteTag(e){
+    //Accès au parent du parent pour atteidre la balise div à masquer
+    e.target.parentElement.parentElement.classList.replace("display-flex", "display-none");
 }
