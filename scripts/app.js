@@ -45,7 +45,7 @@ addEventDisplayCloseSecondaryMenu("machines");
 addEventDisplayCloseSecondaryMenu("utensils");
 
 //Affichage de toutes les recettes
-console.log(recipes);
+console.log(recipes[8].ustensils);
 console.log(recipes[0]);
 console.log(recipes.length);
 
@@ -140,11 +140,8 @@ function fctSearchSortRecipes(e){
         }
     }
 }
-let tabIngredientsPrimarySearchRecipe = [];
 let collectionIngredientsPrimarySearchRecipe = new Set();
-let tabMachinesPrimarySearchRecipe = [];
 let collectionMachinesPrimarySearchRecipe = new Set();
-let tabUtensilsPrimarySearchRecipe = [];
 let collectionUtensilsPrimarySearchRecipe = new Set();
 
 let ingredientsItems = document.querySelectorAll(".ingredient"); 
@@ -198,7 +195,6 @@ function displayGoodRecipe(valueInput){
     document.querySelectorAll(".recipe-card article").forEach(article => {
         article.classList.remove("display-block");
         article.classList.add("class", "display-none");
-        console.log(article);
     });
     //Seules les bonnes recettes sont affichées
     tabResults.forEach(value => { //value correspond a la valeur/numéro de l'article a afficher
@@ -279,18 +275,18 @@ inputSortMenuUtensilsDisplay.addEventListener("input", fctSecondarySearchSortUte
 function fctSecondarySearchSortIngredients(e){
     //Récupérer les éléments a masquer (qui ne correspondent pas à ce qui est saisi)
     const ingredientsItemsDisplay = document.getElementsByClassName("ingredient display-block");
-    let inputUser = e.target.value.trim();
-
+    console.clear();
     //Masquer tous les autres éléments
     for(let i = 0; i < ingredientsItemsDisplay.length; i++){
         ingredientsItemsDisplay[i].classList.add("display-none");
     }
-    
-    //Le but maintenant est de masquer les éléments qui ne correspondent pas a ce qui a été recherché
+    console.log(e.target.value.trim());
+
     for(let i = 0; i < ingredientsItemsDisplay.length; i++){
-        //console.log(ingredientsItemsDisplay[i].children[0].innerHTML);
-        if(ingredientsItemsLinks[i].innerHTML.toLowerCase().includes(inputUser)){
+        if(ingredientsItemsDisplay[i].children[0].innerHTML.toLowerCase().includes(e.target.value.trim())){
             console.log("ça correspond");
+            console.log("Valeur : " + i + " " + ingredientsItemsLinks[i].innerHTML.toLowerCase());
+            console.log(e.target.value.trim());
             console.log(ingredientsItemsDisplay);
             ingredientsItemsDisplay[i].classList.remove("display-none");
         }
@@ -309,7 +305,7 @@ function fctSecondarySearchSortMachines(e){
     
     //Le but maintenant est de masquer les éléments qui ne correspondent pas a ce qui a été recherché
     for(let i = 0; i < machinesItemsDisplay.length; i++){
-        if(machinesItemsLinks[i].innerHTML.toLowerCase().includes(inputUser)){
+        if(machinesItemsDisplay[i].children[0].innerHTML.toLowerCase().includes(inputUser)){
             console.log("ça correspond");
             console.log(machinesItemsDisplay);
             machinesItemsDisplay[i].classList.remove("display-none");
@@ -329,7 +325,7 @@ function fctSecondarySearchSortUtensils(e){
     
     //Le but maintenant est de masquer les éléments qui ne correspondent pas a ce qui a été recherché
     for(let i = 0; i < utensilsItemsDisplay.length; i++){
-        if(utensilsItemsLinks[i].innerHTML.toLowerCase().includes(inputUser)){
+        if(utensilsItemsDisplay[i].children[0].innerHTML.toLowerCase().includes(inputUser)){
             console.log("ça correspond");
             console.log(utensilsItemsDisplay);
             utensilsItemsDisplay[i].classList.remove("display-none");
@@ -348,11 +344,37 @@ ingredientsItemsLinks.forEach(link => {
 });
 
 function fctCompareIngredientsTags(e){
+    //Récupération des recettes déja filtrées via la première recherche
+    const activeRecipes = document.querySelectorAll(".recipe-card .display-block");
+    //Les recettes repassent en display none
+    activeRecipes.forEach(recipe => {
+        recipe.classList.replace("display-block", "display-none");
+    });
     console.log(e.target.innerHTML);
     for(let i = 0; i < tagsIngredientsSpan.length; i++){
         if(e.target.innerHTML === tagsIngredientsSpan[i].innerHTML){
             //Afficher tag correspondant
             tagsIngredientsDiv[i].classList.replace("display-none", "display-flex");
+            //Controle pour afficher les/la recette(s) qui ont/a le tag
+            //Variable pour stocker les index de recettes avec les recettes ayant les machines voulues
+            let tabIndexIngredientsMatch = [];
+            recipes.forEach((recipe, index) => {
+		        recipe.ingredients.forEach(ingredients => {
+			        if(ingredients.ingredient === e.target.innerHTML){
+                   		tabIndexIngredientsMatch.push(index + 1);
+               	 	}	
+		        });
+            })
+
+            activeRecipes.forEach(recipe => {
+                tabIndexIngredientsMatch.forEach(ingredient => {
+                    if(recipe.id === "recipe_" + ingredient){
+                        console.log(recipe);
+                        //Les bonnes recettes passent en display block
+                        recipe.classList.replace("display-none", "display-block");
+                    }
+                });
+            });
         }
         console.log(tagsIngredientsSpan[i].innerHTML);
     }
@@ -368,13 +390,36 @@ machinesItemsLinks.forEach(link => {
 });
 
 function fctCompareMachinesTags(e){
-    console.log(e.target.innerHTML);
+    //Récupération des recettes déja filtrées via la première recherche
+    const activeRecipes = document.querySelectorAll(".recipe-card .display-block");
+    //Les recettes repassent en display none
+    activeRecipes.forEach(recipe => {
+        recipe.classList.replace("display-block", "display-none");
+    });
     for(let i = 0; i < tagsMachinesSpan.length; i++){
         if(e.target.innerHTML === tagsMachinesSpan[i].innerHTML){
             //Afficher tag correspondant
             tagsMachinesDiv[i].classList.replace("display-none", "display-flex");
+
+            //Controle pour afficher les/la recette(s) qui ont/a le tag
+            //Variable pour stocker les index de recettes avec les recettes ayant les machines voulues
+            let tabIndexMachinesMatch = [];
+            recipes.forEach((recipe, index) => {
+                if(recipe.appliance === e.target.innerHTML){
+                    tabIndexMachinesMatch.push(index + 1);
+                }
+            })
+
+            activeRecipes.forEach(recipe => {
+                tabIndexMachinesMatch.forEach(machine => {
+                    if(recipe.id === "recipe_" + machine){
+                        console.log(recipe);
+                        //Les bonnes recettes passent en display block
+                        recipe.classList.replace("display-none", "display-block");
+                    }
+                });
+            });
         }
-        console.log(tagsMachinesSpan[i].innerHTML);
     }
 }
 
@@ -388,11 +433,38 @@ utensilsItemsLinks.forEach(link => {
 });
 
 function fctCompareUtensilsTags(e){
+    //Récupération des recettes déja filtrées via la première recherche
+    const activeRecipes = document.querySelectorAll(".recipe-card .display-block");
+    //Les recettes repassent en display none
+    activeRecipes.forEach(recipe => {
+        recipe.classList.replace("display-block", "display-none");
+    });
     console.log(e.target.innerHTML);
     for(let i = 0; i < tagsUtensilsSpan.length; i++){
         if(e.target.innerHTML === tagsUtensilsSpan[i].innerHTML){
             //Afficher tag correspondant
             tagsUtensilsDiv[i].classList.replace("display-none", "display-flex");
+
+            //Controle pour afficher les/la recette(s) qui ont/a le tag
+            //Variable pour stocker les index de recettes avec les recettes ayant les ustensiles voulus
+            let tabIndexUtensilsMatch = [];
+            recipes.forEach((recipe, index) => {
+		        recipe.ustensils.forEach(utensil => {
+			        if(utensil === e.target.innerHTML){
+                    	tabIndexUtensilsMatch.push(index + 1);
+                	}
+		        });
+            })
+
+            activeRecipes.forEach(recipe => {
+                tabIndexUtensilsMatch.forEach(utensil => {
+                    if(recipe.id === "recipe_" + utensil){
+                        console.log(recipe);
+                        //Les bonnes recettes passent en display block
+                        recipe.classList.replace("display-none", "display-block");
+                    }
+                });
+            });
         }
         console.log(tagsUtensilsSpan[i].innerHTML);
     }
@@ -406,6 +478,11 @@ tagsDeleteBtn.forEach(btn => {
 });
 
 function fctDeleteTag(e){
+
+
     //Accès au parent du parent pour atteidre la balise div à masquer
     e.target.parentElement.parentElement.classList.replace("display-flex", "display-none");
+    //Affichage de toutes les recettes de la première recherche
+    displayGoodRecipe(document.querySelector("#main-search-field").value);
+
 }
