@@ -204,16 +204,20 @@ function displayGoodRecipe(valueInput, recipes){
         }
     }
 
+    let articlesRecipes =  document.querySelectorAll(".recipe-card article");
     //Affichage des bonnes recettes
     //Tous les articles passent en display none
-    document.querySelectorAll(".recipe-card article").forEach(article => {
-        article.classList.remove("display-block");
-        article.classList.add("class", "display-none");
-    });
+
+    for(let i = 0; i < articlesRecipes.length; i++){
+        articlesRecipes[i].classList.remove("display-block");
+        articlesRecipes[i].classList.add("class", "display-none");
+    }
+
     //Seules les bonnes recettes sont affichées
-    tabResults.forEach(value => { //value correspond a la valeur/numéro de l'article a afficher
-        document.querySelectorAll(".recipe-card article")[value].classList.replace("display-none", "display-block");
-    });
+    for(let i = 0; i < tabResults.length; i++){
+        articlesRecipes[tabResults[i]].classList.replace("display-none", "display-block");
+    }
+
     //Ajouts des items aux 3 menus
     addItemsSecondaryMenus(tabResults);
     
