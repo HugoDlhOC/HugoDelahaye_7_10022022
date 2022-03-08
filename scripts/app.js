@@ -115,17 +115,19 @@ function fctSearchSortRecipes(e){
 
     if(inputUser.trim().toLowerCase().length > 2){
         //FCT a exécuter
-        tabResultsFirstSearch = displayGoodRecipe(inputUser.trim().toLowerCase());
-        sortPrincipalSearchStatus = true;
+        tabResultsFirstSearch = displayGoodRecipe(inputUser.trim().toLowerCase(), recipes);
+        sortPrincipalSearchStatus = true;   //Une recherche a été exécutée
     }
-    else {//if(document.querySelectorAll(".tags-container .display-flex").length === 0){
-        sortPrincipalSearchStatus = false;
-        //Sinon, toutes les recettes, contenus de menu secondaire sont affichées
+    else {
+        sortPrincipalSearchStatus = false;  //La recherche n'a pas été exécutée
+
+        //Sinon, toutes les recettes sont affichées
         document.querySelectorAll(".recipe-card article").forEach(article => {
             article.classList.replace("display-none", "display-block");
             console.log(article);
         });
 
+        //Tous les items des menus secondaires affichés
         //Ingrédients
         for(let i = 0; i < ingredientsItems.length; i++){
             ingredientsItems[i].classList.remove("display-none");
@@ -157,30 +159,19 @@ let machinesItemsLinks = document.querySelectorAll(".machine a");
 let utensilsItemsLinks = document.querySelectorAll(".utensil a");
 console.log(ingredientsItems);
 
-function displayGoodRecipe(valueInput){
+
+/*  Cette fonction controle si la valeur tapée dans le champs de recherche principal correspond à une ou plusieurs recette par le 
+    controle de son nom, de sa description et de ses ingrédients.
+*/
+function displayGoodRecipe(valueInput, recipes){
     let tabResults = [];
-    //let recipesCopy = [];
-    //Controle de tags actifs ou non
-    /*
-    if(document.querySelectorAll(".tags-container .display-flex").length !== 0){
-        //il faut modifier les recettes actives
-        let activeRecipes = document.querySelectorAll(".recipe-card .display-block");
-        let nomp = document.querySelectorAll(".recipe-card article");
-        console.log(nomp[1].classList);
-        recipesCopy = activeRecipes;
-        console.log(recipes); 
-        console.log(recipesCopy);
-        console.log(recipesCopy[0].classList);
-    }
-    else{
-        recipesCopy = recipes;
-    }*/
-    
+
     for(let i = 0; i < recipes.length; i++){
-        console.log(recipes.length);
+
         let ifValueFind = false;    //Permet d'éviter les doublons
         //Controle noms
         if(ifValueFind === false){
+            console.log(recipes[i]);
             if(recipes[i].name.toLowerCase().includes(valueInput)){
                 console.log(`NOM INCLU valeur : --${i}--` + recipes[i].name);
                 tabResults.push(i);
@@ -223,71 +214,12 @@ function displayGoodRecipe(valueInput){
     tabResults.forEach(value => { //value correspond a la valeur/numéro de l'article a afficher
         document.querySelectorAll(".recipe-card article")[value].classList.replace("display-none", "display-block");
     });
-
-    //Récupération de tous les ingrédients 
-    collectionIngredientsPrimarySearchRecipe.clear(); //SUPPRIME tous les éléments du SET
-    tabResults.forEach(value => {
-        for(let i = 0; i < recipes[value].ingredients.length; i++){
-            collectionIngredientsPrimarySearchRecipe.add(recipes[value].ingredients[i].ingredient);
-        }
-    });
-
-    //Récupération de tous les appareils
-    collectionMachinesPrimarySearchRecipe.clear();
-    tabResults.forEach(value => {
-        collectionMachinesPrimarySearchRecipe.add(recipes[value].appliance);
-    });
-
-    //Récupération de tous les ustensils
-    collectionUtensilsPrimarySearchRecipe.clear();
-    tabResults.forEach(value => {
-        for(let i = 0; i < recipes[value].ustensils.length; i++){
-            collectionUtensilsPrimarySearchRecipe.add(recipes[value].ustensils[i]);
-        }
-    });
-
-    //Ne plus afficher les ingrédients/machines/ustentils qui ne sont pas contenu dans les recettes recherchées au champs de recherche principal
-    //Ingrédients
-    for(let i = 0; i < ingredientsItems.length; i++){
-        ingredientsItems[i].classList.replace("display-block", "display-none");
-    }
-    Array.from(collectionIngredientsPrimarySearchRecipe).forEach(ingredient => {
-        for(let i = 0; i < ingredientsItems.length; i++){
-            if(ingredientsItemsLinks[i].innerHTML === ingredient){
-                //Afficher les ingrédients concernés
-                ingredientsItems[i].classList.replace("display-none", "display-block");
-            }
-        }
-    });
-
-    //Appareils
-    for(let i = 0; i < machinesItems.length; i++){
-        machinesItems[i].classList.replace("display-block", "display-none");
-    }
-    Array.from(collectionMachinesPrimarySearchRecipe).forEach(machine => {
-        for(let i = 0; i < machinesItems.length; i++){
-            if(machinesItemsLinks[i].innerHTML === machine){
-                //Afficher les ingrédients concernés
-                machinesItems[i].classList.replace("display-none", "display-block");
-            }
-        }
-    });
-
-    //Ustensiles
-    for(let i = 0; i < utensilsItems.length; i++){
-        utensilsItems[i].classList.replace("display-block", "display-none");
-    }
-    Array.from(collectionUtensilsPrimarySearchRecipe).forEach(utensil => {
-        for(let i = 0; i < utensilsItems.length; i++){
-            if(utensilsItemsLinks[i].innerHTML === utensil){
-                //Afficher les ingrédients concernés
-                utensilsItems[i].classList.replace("display-none", "display-block");
-            }
-        }
-    });
-
+    //Ajouts des items aux 3 menus
+    addItemsSecondaryMenus(tabResults);
+    
     return tabResults;
 }
+
 
 //Fonctionalitée de tri des recettes pour le champs de recherche secondaire Ingrédients 
 const inputSortMenuIngredientsDisplay = document.querySelector(`#input-ingredients--display`);
@@ -297,6 +229,9 @@ inputSortMenuIngredientsDisplay.addEventListener("input", fctSecondarySearchSort
 inputSortMenuMachinesDisplay.addEventListener("input", fctSecondarySearchSortMachines);
 inputSortMenuUtensilsDisplay.addEventListener("input", fctSecondarySearchSortUtensils);
 
+
+/*  Ces 3 fonctions permettent d'afficher les items qui correspondent à ce qui a été saisi dans les champs de recherche secondaires
+*/
 function fctSecondarySearchSortIngredients(e){
     //Récupérer les éléments a masquer (qui ne correspondent pas à ce qui est saisi)
     const ingredientsItemsDisplay = document.getElementsByClassName("ingredient display-block");
@@ -432,7 +367,8 @@ let sortRecipesByIngredientsTags = [];
 let sortRecipesByMachinesTags = [];
 let sortRecipesByUtensilsTags = [];
 
-
+/*  Cette fonction ajoute tous les items des recettes actives
+*/
 function addItemsSecondaryMenus(indexOfGoodRecipes){
 
         //Récupération de tous les ingrédients 
@@ -505,13 +441,13 @@ function addItemsSecondaryMenus(indexOfGoodRecipes){
 
 
 function filterForIngredients(){
-    //let sortRecipesByIngredientTags = [];
-    //console.clear();
+
     //Code existant qui fait le tri par apport au champs de recherche principal - si recettes triées
     //Récupération des recettes déja filtrées via la première recherche
-    //const activeRecipes = document.querySelectorAll(".recipe-card .display-block");
     let activeRecipes = document.querySelectorAll(".recipe-card article");
     console.log(sortPrincipalSearchStatus);
+
+    //Si il y a eu une recherche principale, ajout des recettes triées
     if(sortPrincipalSearchStatus === true){
         console.log(tabResultsFirstSearch);//correspond aux indices des articles, retour de displayGoodRecipe(input)
         activeRecipes = [];
@@ -525,19 +461,17 @@ function filterForIngredients(){
     //Controle si autres types de tag actifs
     //Tags machines
     if(selectedMachines.size !== 0){
-        alert("un tag ou plusieurs tags machines actifs");
         console.log(sortRecipesByMachinesTags);
         activeRecipes = sortRecipesByMachinesTags;
     }
     //Tags ustensils
     else if(selectedUtensils.size !== 0){
-        alert("un tag ou plusieurs tags ustensils actifs");
         console.log(sortRecipesByUtensilsTags);
         activeRecipes = sortRecipesByUtensilsTags;
     }
 
     console.log(Array(selectedIngredients).length);
-    //Controle de présence d'un tag actif, si oui agir en conséquence
+    //Controle de présence d'un tag actif du même type, si oui agir en conséquence
     if(selectedIngredients.size !== 0){
         indexSortRecipesByIngredientsTags = []; ////reset car quand l'on passe en else, les anciens items s'additionnent aux nouveaux
         console.log("length sup a 0");
@@ -588,6 +522,7 @@ function filterForIngredients(){
                 });
             });
 
+            //Controle de la recette pour l'afficher comme résultat par la suite
             if(control === true){
                 console.log(`la recette ${id[1]} est valide`);
                 activeRecipes.forEach(activeRecipe => {
@@ -622,6 +557,7 @@ function filterForIngredients(){
 
     //Ajouts/maj items 
     addItemsSecondaryMenus(indexSortRecipesByIngredientsTags);
+    return indexSortRecipesByIngredientsTags;
 }
 
 
@@ -648,13 +584,11 @@ function filterForMachines(){
     //Controle si autres types de tag actifs
     //Tags ingrédients
     if(selectedIngredients.size !== 0){
-        alert("un tag ou plusieurs tags ingrédients actifs");
         console.log(sortRecipesByIngredientsTags);
         activeRecipes = sortRecipesByIngredientsTags;
     }
     //Tags ustensils
     else if(selectedUtensils.size !== 0){
-        alert("un tag ou plusieurs tags ustensils actifs");
         console.log(sortRecipesByUtensilsTags);
         activeRecipes = sortRecipesByUtensilsTags;
     }
@@ -708,7 +642,7 @@ function filterForMachines(){
                 });
             });
 
-            if(control === true){
+            if(control === true){ 
                 console.log(`la recette ${id[1]} est valide`);
                 activeRecipes.forEach(activeRecipe => {
                     console.log(activeRecipe.id);
@@ -736,12 +670,13 @@ function filterForMachines(){
             activeRecipe.classList.add("display-block");
             let idRecipe = activeRecipe.id.split("_");
             console.log(parseInt(idRecipe[1] - 1));
-            indexSortRecipesByIngredientsTags.push(parseInt(idRecipe[1] - 1));
+            indexSortRecipesByMachinesTags.push(parseInt(idRecipe[1] - 1));
         });
     }
 
     //Ajouts/maj items 
     addItemsSecondaryMenus(indexSortRecipesByMachinesTags);
+    return indexSortRecipesByMachinesTags;
 }
         
     
@@ -770,13 +705,11 @@ function filterForUtensils(){
     //Tags ingrédients
     if(selectedIngredients.size !== 0){
         indexSortRecipesByUtensilsTags = [];
-        alert("un tag ou plusieurs tags ingrédients actifs");
         console.log(sortRecipesByIngredientsTags);
         activeRecipes = sortRecipesByIngredientsTags;
     }
     //Tags machines
     else if(selectedMachines.size !== 0){
-        alert("un tag ou plusieurs tags machines actifs");
         console.log(sortRecipesByMachinesTags);
         activeRecipes = sortRecipesByMachinesTags;
     }
@@ -860,12 +793,13 @@ function filterForUtensils(){
             activeRecipe.classList.add("display-block");
             let idRecipe = activeRecipe.id.split("_");
             console.log(parseInt(idRecipe[1] - 1));
-            indexSortRecipesByIngredientsTags.push(parseInt(idRecipe[1] - 1));
+            indexSortRecipesByUtensilsTags.push(parseInt(idRecipe[1] - 1));
         });
     }
     
     //Ajouts/maj items 
     addItemsSecondaryMenus(indexSortRecipesByUtensilsTags);
+    return indexSortRecipesByUtensilsTags;
 }
     
 
