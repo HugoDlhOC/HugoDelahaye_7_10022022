@@ -31,7 +31,7 @@ export class Recipe{
         });
         //Ajout de l'HTML
         let recipeCard = document.querySelector(".recipe-card");
-        recipeCard.innerHTML += `<article id="recipe_${this.id}" class="col-lg-3 col-md-4 col-sm-8 m-3 display-block">
+        recipeCard.innerHTML += `<article id="${this.id}" class="col-lg-3 col-md-4 col-sm-8 m-3 display-block">
         <div class="place-image-recipe"></div>
         <div class="title-time-recipe">
             <p class="title-recipe">${this.name}</p>

@@ -1,8 +1,6 @@
 import { recipes } from "../ressources/data/recipes.js";
 import { Recipe } from "./classes/Recipe.js";
 
-let recipeCard = document.querySelector(".recipe-card");
-
 function addEventDisplayCloseSecondaryMenu(nameOfMenu){
     const linkAndIconHideMenu = document.querySelector(`#input-icon-${nameOfMenu}--hide`);
     const linkAndIconDisplayMenu = document.querySelector(`#input-icon-${nameOfMenu}--display`);
@@ -105,48 +103,14 @@ Recipe.addHtmlOfTags(tagsContainer, tabOfUtensils, "utensil-tag");
 const mainSearchInput = document.querySelector("#main-search-field");
 
 mainSearchInput.addEventListener("input", fctSearchSortRecipes);
-
-let sortPrincipalSearchStatus = false;
-let tabResultsFirstSearch = undefined;
+let inputUser = undefined;
 
 //Déclancher la recherche uniquement quand le nombre de caractère tapé par l'utilisateur est supérieur a 2
 function fctSearchSortRecipes(e){
-    let inputUser = e.target.value;
-
-    if(inputUser.trim().toLowerCase().length > 2){
-        //FCT a exécuter
-        tabResultsFirstSearch = displayGoodRecipe(inputUser.trim().toLowerCase(), recipes);
-        sortPrincipalSearchStatus = true;   //Une recherche a été exécutée
-    }
-    else {
-        sortPrincipalSearchStatus = false;  //La recherche n'a pas été exécutée
-
-        //Sinon, toutes les recettes sont affichées
-        document.querySelectorAll(".recipe-card article").forEach(article => {
-            article.classList.replace("display-none", "display-block");
-            console.log(article);
-        });
-
-        //Tous les items des menus secondaires affichés
-        //Ingrédients
-        for(let i = 0; i < ingredientsItems.length; i++){
-            ingredientsItems[i].classList.remove("display-none");
-            ingredientsItems[i].classList.add("display-block");
-        }
-
-        //Appareils
-        for(let i = 0; i < machinesItems.length; i++){
-            machinesItems[i].classList.remove("display-none");
-            machinesItems[i].classList.add("display-block");
-        }
-
-        //Ustensiles
-        for(let i = 0; i < utensilsItems.length; i++){
-            utensilsItems[i].classList.remove("display-none");
-            utensilsItems[i].classList.add("display-block");
-        }
-    }
+    inputUser = e.target.value;
+    displayGoodRecipe(inputUser.trim().toLowerCase(), recipes);
 }
+
 let collectionIngredientsPrimarySearchRecipe = new Set();
 let collectionMachinesPrimarySearchRecipe = new Set();
 let collectionUtensilsPrimarySearchRecipe = new Set();
@@ -166,26 +130,40 @@ console.log(ingredientsItems);
 function displayGoodRecipe(valueInput, recipes){
     let tabResults = [];
 
-    for(let i = 0; i < recipes.length; i++){
+    if(valueInput !== undefined && valueInput.length > 2)
+    {
 
-        let ifValueFind = false;    //Permet d'éviter les doublons
-        //Controle noms
-        if(ifValueFind === false){
-            console.log(recipes[i]);
-            if(recipes[i].name.toLowerCase().includes(valueInput)){
-                console.log(`NOM INCLU valeur : --${i}--` + recipes[i].name);
-                tabResults.push(i);
-                console.log(tabResults);
-                ifValueFind = true;
+        for(let i = 0; i < recipes.length; i++){
+
+            let ifValueFind = false;    //Permet d'éviter les doublons
+            //Controle noms
+            if(ifValueFind === false){
+                console.log(recipes[i]);
+                if(recipes[i].name.toLowerCase().includes(valueInput)){
+                    console.log(`NOM INCLU valeur : --${i}--` + recipes[i].name);
+                    tabResults.push(i);
+                    console.log(tabResults);
+                    ifValueFind = true;
+                }
             }
-        }
 
-        //Controle ingredients
-        if(ifValueFind === false){
-            for(let j = 0; j < recipes[i].ingredients.length; j++){
-                //console.log(recipes[i].ingredients[j]);
-                if(recipes[i].ingredients[j].ingredient.toLowerCase().includes(valueInput)){
-                    console.log(`INGREDIENT INCLU valeur : --${i}--` + recipes[i].ingredients[j].ingredient);
+            //Controle ingredients
+            if(ifValueFind === false){
+                for(let j = 0; j < recipes[i].ingredients.length; j++){
+                    //console.log(recipes[i].ingredients[j]);
+                    if(recipes[i].ingredients[j].ingredient.toLowerCase().includes(valueInput)){
+                        console.log(`INGREDIENT INCLU valeur : --${i}--` + recipes[i].ingredients[j].ingredient);
+                        tabResults.push(i);
+                        console.log(tabResults);
+                        ifValueFind = true;
+                    }
+                }
+            }
+
+            //Controle description
+            if(ifValueFind === false){
+                if(recipes[i].description.toLowerCase().includes(valueInput)){
+                    console.log(`DESCRIPTION INCLUE valeur : --${i}--` + recipes[i].name);
                     tabResults.push(i);
                     console.log(tabResults);
                     ifValueFind = true;
@@ -193,34 +171,37 @@ function displayGoodRecipe(valueInput, recipes){
             }
         }
 
-        //Controle description
-        if(ifValueFind === false){
-            if(recipes[i].description.toLowerCase().includes(valueInput)){
-                console.log(`DESCRIPTION INCLUE valeur : --${i}--` + recipes[i].name);
-                tabResults.push(i);
-                console.log(tabResults);
-                ifValueFind = true;
-            }
+        let articlesRecipes =  document.querySelectorAll(".recipe-card article");
+        //Affichage des bonnes recettes
+        //Tous les articles passent en display none
+
+        for(let i = 0; i < articlesRecipes.length; i++){
+            articlesRecipes[i].classList.remove("display-block");
+            articlesRecipes[i].classList.add("class", "display-none");
         }
+
+        //Seules les bonnes recettes sont affichées
+        for(let i = 0; i < tabResults.length; i++){
+            articlesRecipes[tabResults[i]].classList.replace("display-none", "display-block");
+        }
+
+        //Ajouts des items aux 3 menus
+        addItemsSecondaryMenus(tabResults);
+        
     }
-
-    let articlesRecipes =  document.querySelectorAll(".recipe-card article");
-    //Affichage des bonnes recettes
-    //Tous les articles passent en display none
-
-    for(let i = 0; i < articlesRecipes.length; i++){
-        articlesRecipes[i].classList.remove("display-block");
-        articlesRecipes[i].classList.add("class", "display-none");
+    else{
+        for(let i = 0; i < recipes.length; i++){
+            tabResults.push(i);
+        }
+        document.querySelectorAll(".recipe-card article").forEach(article => {
+            article.classList.remove("display-none");
+            article.classList.add("display-block");
+        });
     }
-
-    //Seules les bonnes recettes sont affichées
-    for(let i = 0; i < tabResults.length; i++){
-        articlesRecipes[tabResults[i]].classList.replace("display-none", "display-block");
-    }
-
-    //Ajouts des items aux 3 menus
-    addItemsSecondaryMenus(tabResults);
+    console.log(tabResults);
     
+    filterForIngredientsMachinesUtensiles(tabResults);
+
     return tabResults;
 }
 
@@ -301,8 +282,6 @@ function fctSecondarySearchSortUtensils(e){
 
 
 
-
-
 //Ajouter un évènement click sur chacun des liens contenus dans les menus secondaires
 //Menu ingrédients
 let selectedIngredients = new Set();
@@ -317,8 +296,9 @@ ingredientsItemsLinks.forEach(link => {
         //Ajout de l'item dans le tableau
         selectedIngredients.add(link.innerHTML);
         console.log(selectedIngredients);
-        //Appel fonction de filtrage
-        filterForIngredients();
+
+        displayGoodRecipe(inputUser, recipes);
+        
     }
     removeEventListener("click", fctEventLinkItemIngredient);
 });
@@ -337,7 +317,7 @@ machinesItemsLinks.forEach(link => {
         selectedMachines.add(link.innerHTML);
         console.log(selectedMachines);
         //Appel fonction de filtrage
-        filterForMachines();
+        displayGoodRecipe(inputUser, recipes);
     }
     removeEventListener("click", fctEventLinkItemMachine);
 });
@@ -356,20 +336,10 @@ utensilsItemsLinks.forEach(link => {
         selectedUtensils.add(link.innerHTML);
         console.log(selectedUtensils);
         //Appel fonction de filtrage
-        filterForUtensils();
+        displayGoodRecipe(inputUser, recipes);
     }
     removeEventListener("click", fctEventLinkItemUtensil);
 });
-
-
-
-let indexSortRecipesByIngredientsTags = [];
-let indexSortRecipesByMachinesTags = [];
-let indexSortRecipesByUtensilsTags = [];
-
-let sortRecipesByIngredientsTags = [];
-let sortRecipesByMachinesTags = [];
-let sortRecipesByUtensilsTags = [];
 
 /*  Cette fonction ajoute tous les items des recettes actives
 */
@@ -443,371 +413,171 @@ function addItemsSecondaryMenus(indexOfGoodRecipes){
 }
 
 
+function filterForIngredientsMachinesUtensiles(activeRecipes){
+    console.log(activeRecipes);
 
-function filterForIngredients(){
-
-    //Code existant qui fait le tri par apport au champs de recherche principal - si recettes triées
-    //Récupération des recettes déja filtrées via la première recherche
-    let activeRecipes = document.querySelectorAll(".recipe-card article");
-    console.log(sortPrincipalSearchStatus);
-
-    //Si il y a eu une recherche principale, ajout des recettes triées
-    if(sortPrincipalSearchStatus === true){
-        console.log(tabResultsFirstSearch);//correspond aux indices des articles, retour de displayGoodRecipe(input)
-        activeRecipes = [];
-        tabResultsFirstSearch.forEach(recipe => {
-            activeRecipes.push(document.getElementById("recipe_" + parseInt(recipe + 1)));
-        });
-
-        console.log(activeRecipes);
-    }
-
-    //Controle si autres types de tag actifs
-    //Tags machines
-    if(selectedMachines.size !== 0){
-        console.log(sortRecipesByMachinesTags);
-        activeRecipes = sortRecipesByMachinesTags;
-    }
-    //Tags ustensils
-    else if(selectedUtensils.size !== 0){
-        console.log(sortRecipesByUtensilsTags);
-        activeRecipes = sortRecipesByUtensilsTags;
-    }
-
-    console.log(Array(selectedIngredients).length);
-    //Controle de présence d'un tag actif du même type, si oui agir en conséquence
+    //Controle de présence d'un tag actif de type INGREDIENT, si oui agir en conséquence
     if(selectedIngredients.size !== 0){
-        indexSortRecipesByIngredientsTags = []; ////reset car quand l'on passe en else, les anciens items s'additionnent aux nouveaux
-        console.log("length sup a 0");
-        //Pour chaque recette affichée, on verifie la présence du ou des ingrédient(s)
-        let tabIdRecipes = []; //Ce tableau contient les id des recettes affichées
-        activeRecipes.forEach(activeRecipe => {
-            //on récupère tous les id pour obtenir l'id de la recette
-            tabIdRecipes.push(activeRecipe.id.split("_"));
-            //On masque toutes les recettes pour n'afficher que celles qui respectent le tri
-            activeRecipe.classList.replace("display-block", "display-none");
-        });
-        console.log(activeRecipes);
-        let listOfIngredients = [];     //Stocker tous les ingrédients dans une variable pour la parcourir ensuite
-        
-        tabIdRecipes.forEach(id => {
+        let badRecipes = [];
+        //Pour toutes les recettes actives
+        for(let i = 0; i < activeRecipes.length; i++){  
+            const recipe = recipes[activeRecipes[i]];
             let control = true;
-            id[1] = parseInt(id[1]);
-            id[1] += -1;
-            console.log(id[1]);
-            console.log(recipes[id[1]]); //les bonnes recettes sont celle-ci
-            console.log(recipes[id[1]].ingredients);
+            let activeIngredients = "";
 
-            //Stocker les ingrédients dans une variable pour pourvoir les parcourir ensuite
-            listOfIngredients = [];
-            //Attention a ne pas mélanger les ingrédients des différentes recettes
-            recipes[id[1]].ingredients.forEach(ingredient => {
-                listOfIngredients += ingredient.ingredient + " ";
-            });
-            //Controle de la présence des ingrédients dans la recette, retour en booleen
-            selectedIngredients.forEach(selectIngredient => {
-                console.log(selectIngredient);
-                if(control === true){ 
-                    if(listOfIngredients.includes(selectIngredient)){
-                        console.log("l'ingrédient est inclu");
-                        control = true;
-                    }
-                    else{
-                        console.log("l'ingrédient n'est pas inclu");
-                        control = false;
-                    }
-                }
-                //Affichage du tag en HTML
+            //Pour tous les tags d'ingrédients actifs
+            for(let j = 0; j < selectedIngredients.size; j++){
+                const selectedIngredient = Array.from(selectedIngredients)[j];  //Récupération ingrédient actif
+
                 tagsIngredientsSpan.forEach((tagIngredientSpan, index) => {
-                    if(tagIngredientSpan.innerHTML === selectIngredient){
-                        console.log(tagIngredientSpan.innerHTML + " " + selectIngredient + " " + index);
+                    
+                    if(tagIngredientSpan.innerHTML === selectedIngredient){
                         tagsIngredientsDiv[index].classList.replace("display-none", "display-flex");
                     }
                 });
-            });
 
-            //Controle de la recette pour l'afficher comme résultat par la suite
-            if(control === true){
-                console.log(`la recette ${id[1]} est valide`);
-                activeRecipes.forEach(activeRecipe => {
-                    console.log(activeRecipe.id);
-                    console.log(id[1] + 1);
-
-                    if(activeRecipe.id === "recipe_" + parseInt(id[1] + 1)){
-                        console.log("recipe_" + parseInt(id[1] + 1));
-                        console.log(activeRecipe);
-                        activeRecipe.classList.replace("display-none", "display-block");
-                        indexSortRecipesByIngredientsTags.push(id[1]);
-                        sortRecipesByIngredientsTags.push(activeRecipe);
-                    }
-                });
-            }
-            else{
-                console.log(`la recette ${id[1]} est invalide`);
-            }
-            console.log(control);
-        });
-    }
-    else{
-        //alert("aucun élément");
-        activeRecipes.forEach((activeRecipe, index) => {
-            activeRecipe.classList.remove("display-none");
-            activeRecipe.classList.add("display-block");
-            let idRecipe = activeRecipe.id.split("_");
-            console.log(parseInt(idRecipe[1] - 1));
-            indexSortRecipesByIngredientsTags.push(parseInt(idRecipe[1] - 1));
-        });
-    }
-
-    //Ajouts/maj items 
-    addItemsSecondaryMenus(indexSortRecipesByIngredientsTags);
-    return indexSortRecipesByIngredientsTags;
-}
-
-
-
-function filterForMachines(){
-    //let sortRecipesByIngredientTags = [];
-    //console.clear();
-    //Code existant qui fait le tri par apport au champs de recherche principal - si recettes triées
-    //Récupération des recettes déja filtrées via la première recherche
-    //const activeRecipes = document.querySelectorAll(".recipe-card .display-block");
-    let activeRecipes = document.querySelectorAll(".recipe-card article");
-    console.log(sortPrincipalSearchStatus);
-    if(sortPrincipalSearchStatus === true){
-        indexSortRecipesByIngredientsTags = []; 
-        console.log(tabResultsFirstSearch);//correspond aux indices des articles, retour de displayGoodRecipe(input)
-        activeRecipes = [];
-        tabResultsFirstSearch.forEach(recipe => {
-            activeRecipes.push(document.getElementById("recipe_" + parseInt(recipe + 1)));
-        });
-
-        console.log(activeRecipes);
-    }
-
-    //Controle si autres types de tag actifs
-    //Tags ingrédients
-    if(selectedIngredients.size !== 0){
-        console.log(sortRecipesByIngredientsTags);
-        activeRecipes = sortRecipesByIngredientsTags;
-    }
-    //Tags ustensils
-    else if(selectedUtensils.size !== 0){
-        console.log(sortRecipesByUtensilsTags);
-        activeRecipes = sortRecipesByUtensilsTags;
-    }
-
-    console.log(Array(selectedMachines).length);
-    //Controle de présence d'un tag actif, si oui agir en conséquence
-    if(selectedMachines.size !== 0){
-        console.log("length sup a 0");
-        //Pour chaque recette affichée, on verifie la présence du ou des ingrédient(s)
-        let tabIdRecipes = []; //Ce tableau contient les id des recettes affichées
-        activeRecipes.forEach(activeRecipe => {
-            //on récupère tous les id pour obtenir l'id de la recette
-            tabIdRecipes.push(activeRecipe.id.split("_"));
-            //On masque toutes les recettes pour n'afficher que celles qui respectent le tri
-            activeRecipe.classList.replace("display-block", "display-none");
-        });
-        console.log(activeRecipes);
-        let listOfMachines = [];     //Stocker tous les ingrédients dans une variable pour la parcourir ensuite
-        
-        tabIdRecipes.forEach(id => {
-            let control = true;
-            id[1] = parseInt(id[1]);
-            id[1] += -1;
-            console.log(id[1]);
-            console.log(recipes[id[1]]); //les bonnes recettes sont celle-ci
-            console.log(recipes[id[1]].appliance);
-
-            //Stocker les ingrédients dans une variable pour pourvoir les parcourir ensuite
-            listOfMachines = [];
-            //Attention a ne pas mélanger les ingrédients des différentes recettes
-            listOfMachines += recipes[id[1]].appliance + " ";
-            //Controle de la présence des ingrédients dans la recette, retour en booleen
-            selectedMachines.forEach(selectMachine => {
-                console.log(selectMachine);
-                if(control === true){ 
-                    if(listOfMachines.includes(selectMachine)){
-                        console.log("l'appareil est inclu");
-                        control = true;
-                    }
-                    else{
-                        console.log("l'appareil n'est pas inclu");
-                        control = false;
-                    }
+                //Ajout des ingrédients
+                for(let k = 0; k < recipe.ingredients.length; k++){
+                    activeIngredients += recipe.ingredients[k].ingredient + " ";
                 }
-                //Affichage du tag en HTML
+
+                if(!activeIngredients.includes(selectedIngredient)){ //Si le tag n'est pas inclu dans les ingrédients, alors le control passe a false
+                    control = false;
+                }
+                activeIngredients = "";
+            }
+
+
+            if(control === false){
+                //Recette a masquer
+                document.getElementById(recipe.id).classList.remove("display-block");
+                document.getElementById(recipe.id).classList.add("display-none");
+                badRecipes.push(recipe.id - 1);
+            }
+            
+        }
+        console.log(badRecipes);
+        console.log(activeRecipes);
+        //Suppression du tableau des mauvaises recettes
+        for(let i = 0; i < activeRecipes.length; i++){
+            for(let z = 0; z < badRecipes.length; z++){
+                if(activeRecipes[i] === badRecipes[z]){
+                    activeRecipes.splice(i, 1);
+                }
+            }
+        }
+    }
+
+    console.log(activeRecipes);
+
+    //Controle de présence d'un tag actif de type MACHINE/APPAREILS, si oui agir en conséquence
+    if(selectedMachines.size !== 0){
+        let badRecipes = [];
+        //Pour toutes les recettes actives
+        for(let i = 0; i < activeRecipes.length; i++){  
+            const recipe = recipes[activeRecipes[i]];
+            let control = true;
+            let activeMachines = "";
+
+            //Pour tous les tags d'ingrédients actifs
+            for(let j = 0; j < selectedMachines.size; j++){
+                const selectedMachine = Array.from(selectedMachines)[j];  //Récupération machine active
+
                 tagsMachinesSpan.forEach((tagMachineSpan, index) => {
-                    if(tagMachineSpan.innerHTML === selectMachine){
-                        console.log(tagMachineSpan.innerHTML + " " + selectMachine + " " + index);
+                    
+                    if(tagMachineSpan.innerHTML === selectedMachine){
                         tagsMachinesDiv[index].classList.replace("display-none", "display-flex");
                     }
                 });
-            });
 
-            if(control === true){ 
-                console.log(`la recette ${id[1]} est valide`);
-                activeRecipes.forEach(activeRecipe => {
-                    console.log(activeRecipe.id);
-                    console.log(id[1] + 1);
+                //Ajout des appareils
+                activeMachines += recipe.appliance;
 
-                    if(activeRecipe.id === "recipe_" + parseInt(id[1] + 1)){
-                        console.log("recipe_" + parseInt(id[1] + 1));
-                        console.log(activeRecipe);
-                        activeRecipe.classList.replace("display-none", "display-block");
-                        indexSortRecipesByMachinesTags.push(id[1]);
-                        sortRecipesByMachinesTags.push(activeRecipe);
-                    }
-                });
-            }
-            else{
-                console.log(`la recette ${id[1]} est invalide`);
-            }
-            console.log(control);
-        });
-    }
-    else{
-        //alert("aucun élément");
-        activeRecipes.forEach(activeRecipe => {
-            activeRecipe.classList.remove("display-none");
-            activeRecipe.classList.add("display-block");
-            let idRecipe = activeRecipe.id.split("_");
-            console.log(parseInt(idRecipe[1] - 1));
-            indexSortRecipesByMachinesTags.push(parseInt(idRecipe[1] - 1));
-        });
-    }
-
-    //Ajouts/maj items 
-    addItemsSecondaryMenus(indexSortRecipesByMachinesTags);
-    return indexSortRecipesByMachinesTags;
-}
-        
-    
-
-
-
-function filterForUtensils(){
-    //let sortRecipesByIngredientTags = [];
-    //console.clear();
-    //Code existant qui fait le tri par apport au champs de recherche principal - si recettes triées
-    //Récupération des recettes déja filtrées via la première recherche
-    //const activeRecipes = document.querySelectorAll(".recipe-card .display-block");
-    let activeRecipes = document.querySelectorAll(".recipe-card article");
-    console.log(sortPrincipalSearchStatus);
-    if(sortPrincipalSearchStatus === true){
-        console.log(tabResultsFirstSearch);//correspond aux indices des articles, retour de displayGoodRecipe(input)
-        activeRecipes = [];
-        tabResultsFirstSearch.forEach(recipe => {
-            activeRecipes.push(document.getElementById("recipe_" + parseInt(recipe + 1)));
-        });
-
-        console.log(activeRecipes);
-    }
-
-    //Controle si autres types de tag actifs
-    //Tags ingrédients
-    if(selectedIngredients.size !== 0){
-        indexSortRecipesByUtensilsTags = [];
-        console.log(sortRecipesByIngredientsTags);
-        activeRecipes = sortRecipesByIngredientsTags;
-    }
-    //Tags machines
-    else if(selectedMachines.size !== 0){
-        console.log(sortRecipesByMachinesTags);
-        activeRecipes = sortRecipesByMachinesTags;
-    }
-
-    console.log(Array(selectedUtensils).length);
-    //Controle de présence d'un tag actif, si oui agir en conséquence
-    if(selectedUtensils.size !== 0){
-        console.log("length sup a 0");
-        //Pour chaque recette affichée, on verifie la présence du ou des ingrédient(s)
-        let tabIdRecipes = []; //Ce tableau contient les id des recettes affichées
-        activeRecipes.forEach(activeRecipe => {
-            //on récupère tous les id pour obtenir l'id de la recette
-            tabIdRecipes.push(activeRecipe.id.split("_"));
-            //On masque toutes les recettes pour n'afficher que celles qui respectent le tri
-            activeRecipe.classList.replace("display-block", "display-none");
-        });
-        console.log(activeRecipes);
-        let listOfUtensils = [];     //Stocker tous les ustensils dans une variable pour la parcourir ensuite
-        
-        tabIdRecipes.forEach(id => {
-            let control = true;
-            id[1] = parseInt(id[1]);
-            id[1] += -1;
-            console.log(id[1]);
-            console.log(recipes[id[1]]); //les bonnes recettes sont celle-ci
-            console.log(recipes[id[1]].ustensils);
-
-            //Stocker les ustensils dans une variable pour pourvoir les parcourir ensuite
-            listOfUtensils = [];
-            //Attention a ne pas mélanger les ustensils des différentes recettes
-            recipes[id[1]].ustensils.forEach(utensil => {
-                listOfUtensils += utensil + " ";
-            });
-            //Controle de la présence des ustensils dans la recette, retour en booleen
-            selectedUtensils.forEach(selectUtensil => {
-                console.log(selectUtensil);
-                if(control === true){ 
-                    if(listOfUtensils.includes(selectUtensil)){
-                        console.log("l'ustensil est inclu");
-                        control = true;
-                    }
-                    else{
-                        console.log("l'ustensil n'est pas inclu");
-                        control = false;
-                    }
+                if(!activeMachines.includes(selectedMachine)){ //Si le tag n'est pas inclu dans les machines, alors le control passe a false
+                    control = false;
                 }
-                //Affichage du tag en HTML
+                activeMachines = "";
+            }
+
+
+            if(control === false){
+                //Recette a masquer
+                document.getElementById(recipe.id).classList.remove("display-block");
+                document.getElementById(recipe.id).classList.add("display-none");
+                badRecipes.push(recipe.id - 1);
+            }
+            
+        }
+        console.log(badRecipes);
+        console.log(activeRecipes);
+        //Suppression du tableau des mauvaises recettes
+        for(let i = 0; i < activeRecipes.length; i++){
+            for(let z = 0; z < badRecipes.length; z++){
+                if(activeRecipes[i] === badRecipes[z]){
+                    activeRecipes.splice(i, 1);
+                }
+            }
+        }
+    }
+
+    console.log(activeRecipes);
+
+
+    //Controle de présence d'un tag actif de type USTENSILS, si oui agir en conséquence
+    if(selectedUtensils.size !== 0){
+        let badRecipes = [];
+        //Pour toutes les recettes actives
+        for(let i = 0; i < activeRecipes.length; i++){  
+            const recipe = recipes[activeRecipes[i]];
+            let control = true;
+            let activeUtensils = "";
+
+            //Pour tous les tags d'ustensils actifs
+            for(let j = 0; j < selectedUtensils.size; j++){
+                const selectedUtensil = Array.from(selectedUtensils)[j];  //Récupération ustensil actif
+
                 tagsUtensilsSpan.forEach((tagUtensilSpan, index) => {
-                    if(tagUtensilSpan.innerHTML === selectUtensil){
-                        console.log(tagUtensilSpan.innerHTML + " " + selectUtensil + " " + index);
+                    
+                    if(tagUtensilSpan.innerHTML === selectedUtensil){
                         tagsUtensilsDiv[index].classList.replace("display-none", "display-flex");
                     }
                 });
-            });
 
-            if(control === true){
-                console.log(`la recette ${id[1]} est valide`);
-                activeRecipes.forEach(activeRecipe => {
-                    console.log(activeRecipe.id);
-                    console.log(id[1] + 1);
+                //Ajout des ustensils
+                for(let k = 0; k < recipe.ustensils.length; k++){
+                    activeUtensils += recipe.ustensils[k] + " ";
+                }
 
-                    if(activeRecipe.id === "recipe_" + parseInt(id[1] + 1)){
-                        console.log("recipe_" + parseInt(id[1] + 1));
-                        console.log(activeRecipe);
-                        activeRecipe.classList.replace("display-none", "display-block");
-                        indexSortRecipesByUtensilsTags.push(id[1]);
-                        sortRecipesByUtensilsTags.push(activeRecipe);
-                    }
-                });
+                if(!activeUtensils.includes(selectedUtensil)){ //Si le tag n'est pas inclu dans les ustensils, alors le control passe a false
+                    control = false;
+                }
+                activeUtensils = "";
             }
-            else{
-                console.log(`la recette ${id[1]} est invalide`);
+
+
+            if(control === false){
+                //Recette a masquer
+                document.getElementById(recipe.id).classList.remove("display-block");
+                document.getElementById(recipe.id).classList.add("display-none");
+                badRecipes.push(recipe.id - 1);
             }
-            console.log(control);
-        });
+            
+        }
+        console.log(badRecipes);
+        console.log(activeRecipes);
+        //Suppression du tableau des mauvaises recettes
+        for(let i = 0; i < activeRecipes.length; i++){
+            for(let z = 0; z < badRecipes.length; z++){
+                if(activeRecipes[i] === badRecipes[z]){
+                    activeRecipes.splice(i, 1);
+                }
+            }
+        }
     }
-    else{
-        //alert("aucun élément");
-        activeRecipes.forEach(activeRecipe => {
-            activeRecipe.classList.remove("display-none");
-            activeRecipe.classList.add("display-block");
-            let idRecipe = activeRecipe.id.split("_");
-            console.log(parseInt(idRecipe[1] - 1));
-            indexSortRecipesByUtensilsTags.push(parseInt(idRecipe[1] - 1));
-        });
-    }
-    
-    //Ajouts/maj items 
-    addItemsSecondaryMenus(indexSortRecipesByUtensilsTags);
-    return indexSortRecipesByUtensilsTags;
+
+    console.log(activeRecipes);
+    addItemsSecondaryMenus(activeRecipes);
 }
-    
-
-    
 
 
 //Ajouter un évènement sur tous les boutons de fermeture de tags ingrédients
@@ -831,7 +601,14 @@ function deleteFilterIngredient(e, index){
         if(selectElement === tagsIngredientsSpan[index].innerHTML){
             selectedIngredients.delete(tagsIngredientsSpan[index].innerHTML);
             console.log(selectedIngredients);
-            filterForIngredients();
+
+            if(inputUser === undefined){
+                document.querySelectorAll(".recipe-card article").forEach(article => {
+                    article.classList.remove("display-none");
+                    article.classList.add("display-block");
+                });
+            }
+            displayGoodRecipe(inputUser, recipes);
         }
     });
 }
@@ -858,11 +635,16 @@ function deleteFilterMachine(e, index){
         if(selectElement === tagsMachinesSpan[index].innerHTML){
             selectedMachines.delete(tagsMachinesSpan[index].innerHTML);
             console.log(selectedMachines);
-            filterForMachines();
+            if(inputUser === undefined){
+                document.querySelectorAll(".recipe-card article").forEach(article => {
+                    article.classList.remove("display-none");
+                    article.classList.add("display-block");
+                });
+            }
+            displayGoodRecipe(inputUser, recipes);
         }
     });
 }
-
 
 
 //Ajouter un évènement sur tous les boutons de fermeture de tags ustensils
@@ -886,7 +668,13 @@ function deleteFilterUtensil(e, index){
         if(selectElement === tagsUtensilsSpan[index].innerHTML){
             selectedUtensils.delete(tagsUtensilsSpan[index].innerHTML);
             console.log(selectedUtensils);
-            filterForUtensils();
+            if(inputUser === undefined){
+                document.querySelectorAll(".recipe-card article").forEach(article => {
+                    article.classList.remove("display-none");
+                    article.classList.add("display-block");
+                });
+            }
+            displayGoodRecipe(inputUser, recipes);
         }
     });
 }
