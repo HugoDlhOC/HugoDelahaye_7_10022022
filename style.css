@@ -58,6 +58,9 @@ header #name-site{
 .sort-menus ul{
     margin-bottom: 0;
     border-radius: 0px 0px 5px 5px;
+    /*display: none;*/
+    grid-template-columns: repeat(3, 1fr);
+    width: 670px;
 }
 
 .sort-menus ul li a{
@@ -67,7 +70,7 @@ header #name-site{
 
 .sort-menus--input-icon{
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 5px 5px 0px 0px;
     margin-right: 20px;
     align-items: center;
 }
@@ -99,6 +102,18 @@ header #name-site{
     background-color: #ED6454;
 }
 
+#input-icon-ingredients--display, #input-icon-machines--display, #input-icon-utensils--display{
+    margin-right: 0px;
+}
+
+#input-icon-ingredients--hide, #input-icon-machines--hide, #input-icon-utensils--hide{
+    border-radius: 5px;
+}
+
+#input-ingredients--display, #input-machines--display, #input-utensils--display{
+    width: 35%;
+}
+
 .sort-menu--link, .sort-menu--link{
     color: white;
     font-size: 18px;
@@ -123,16 +138,20 @@ header #name-site{
     padding-right: 28.5px;
 }
 
-#ingredients-menu-items li{
+#ingredients-menu-items, #ingredients-menu-items li{
     background-color: #3282F7;
 }
 
-#machines-menu-items li{
+#machines-menu-items, #machines-menu-items li{
     background-color: #68D9A4;
 }
 
-#utensils-menu-items li{
+#utensils-menu-items, #utensils-menu-items li{
     background-color: #ED6454;
+}
+
+#ingredients-menu-items li, #machines-menu-items li, #utensils-menu-items li{
+    border-radius: 0px 0px 5px 5px;
 }
 
 /*Tags recherche recondaire*/
@@ -257,6 +276,10 @@ article{
 /*Classes display*/
 .display-flex{
     display: flex;
+}
+
+.display-grid{
+    display: grid;
 }
 
 .display-block{
