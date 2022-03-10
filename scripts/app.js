@@ -19,7 +19,7 @@ function addEventDisplayCloseSecondaryMenu(nameOfMenu){
         menu.classList.replace("display-none", "display-grid");
         menu.classList.add("mr-4");
         linkAndIconHideMenu.classList.replace("display-flex", "display-none");
-        linkAndIconDisplayMenu.classList.replace("display-none", "display-block");
+        linkAndIconDisplayMenu.classList.replace("display-none", "display-flex");
         linkAndIconDisplayMenu.classList.add("mr-4");
         inputSortMenuHide.classList.replace("display-block", "display-none");
         inputSortMenuDisplay.classList.replace("display-none", "display-block");
@@ -30,7 +30,7 @@ function addEventDisplayCloseSecondaryMenu(nameOfMenu){
         menu.classList.replace("display-grid", "display-none");
         menu.classList.remove("mr-4");
         linkAndIconHideMenu.classList.replace("display-none", "display-flex");
-        linkAndIconDisplayMenu.classList.replace("display-block", "display-none");
+        linkAndIconDisplayMenu.classList.replace("display-flex", "display-none");
         linkAndIconDisplayMenu.classList.remove("mr-4");
         inputSortMenuHide.classList.replace("display-none", "display-block");
         inputSortMenuDisplay.classList.replace("display-block", "display-none");
