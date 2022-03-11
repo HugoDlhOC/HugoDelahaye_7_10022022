@@ -136,67 +136,63 @@ function displayGoodRecipe(valueInput, recipes){
 
     if(valueInput !== undefined && valueInput.length > 2)
     {
-
-        for(let i = 0; i < recipes.length; i++){
+        recipes.forEach((recipe, index) => {
 
             let ifValueFind = false;    //Permet d'éviter les doublons
             //Controle noms
             if(ifValueFind === false){
-                console.log(recipes[i]);
-                if(recipes[i].name.toLowerCase().includes(valueInput)){
-                    console.log(`NOM INCLU valeur : --${i}--` + recipes[i].name);
-                    tabResults.push(i);
+                console.log(recipe);
+                if(recipe.name.toLowerCase().includes(valueInput)){
+                    tabResults.push(index);
                     console.log(tabResults);
                     ifValueFind = true;
                 }
             }
 
+
             //Controle ingredients
             if(ifValueFind === false){
-                for(let j = 0; j < recipes[i].ingredients.length; j++){
-                    //console.log(recipes[i].ingredients[j]);
-                    if(recipes[i].ingredients[j].ingredient.toLowerCase().includes(valueInput)){
-                        console.log(`INGREDIENT INCLU valeur : --${i}--` + recipes[i].ingredients[j].ingredient);
-                        tabResults.push(i);
+                recipe.ingredients.forEach(ingredients => {
+                    if(ingredients.ingredient.toLowerCase().includes(valueInput)){
+                        tabResults.push(index);
                         console.log(tabResults);
                         ifValueFind = true;
                     }
-                }
+                });
             }
 
             //Controle description
             if(ifValueFind === false){
-                if(recipes[i].description.toLowerCase().includes(valueInput)){
-                    console.log(`DESCRIPTION INCLUE valeur : --${i}--` + recipes[i].name);
-                    tabResults.push(i);
+                if(recipe.description.toLowerCase().includes(valueInput)){
+                    tabResults.push(index);
                     console.log(tabResults);
                     ifValueFind = true;
                 }
             }
-        }
+        });
 
         let articlesRecipes =  document.querySelectorAll(".recipe-card article");
         //Affichage des bonnes recettes
         //Tous les articles passent en display none
 
-        for(let i = 0; i < articlesRecipes.length; i++){
-            articlesRecipes[i].classList.remove("display-block");
-            articlesRecipes[i].classList.add("class", "display-none");
-        }
+        articlesRecipes.forEach(recipe => {
+            recipe.classList.remove("display-block");
+            recipe.classList.add("class", "display-none");
+        });
 
         //Seules les bonnes recettes sont affichées
-        for(let i = 0; i < tabResults.length; i++){
-            articlesRecipes[tabResults[i]].classList.replace("display-none", "display-block");
-        }
+        tabResults.forEach(result => {
+            articlesRecipes[result].classList.replace("display-none", "display-block");
+        });
 
         //Ajouts des items aux 3 menus
         addItemsSecondaryMenus(tabResults);
         
     }
     else{
-        for(let i = 0; i < recipes.length; i++){
-            tabResults.push(i);
-        }
+        recipes.forEach((recipe, index) => {
+            tabResults.push(index);
+        });
         document.querySelectorAll(".recipe-card article").forEach(article => {
             article.classList.remove("display-none");
             article.classList.add("display-block");
@@ -352,23 +348,24 @@ function addItemsSecondaryMenus(indexOfGoodRecipes){
         //Récupération de tous les ingrédients 
         collectionIngredientsPrimarySearchRecipe.clear(); //SUPPRIME tous les éléments du SET
         indexOfGoodRecipes.forEach(value => {
-            for(let i = 0; i < recipes[value].ingredients.length; i++){
-                collectionIngredientsPrimarySearchRecipe.add(recipes[value].ingredients[i].ingredient);
-            }
+            recipes[value].ingredients.forEach(ingredients => {
+                collectionIngredientsPrimarySearchRecipe.add(ingredients.ingredient);
+            })
         });
 
         //Ne plus afficher les ingrédients/machines/ustentils qui ne sont pas contenu dans les recettes recherchées au champs de recherche principal
         //Ingrédients
-        for(let i = 0; i < ingredientsItems.length; i++){
-            ingredientsItems[i].classList.replace("display-block", "display-none");
-        }
+        ingredientsItems.forEach(ingredientItem => {
+            ingredientItem.classList.replace("display-block", "display-none");
+        });
+
         Array.from(collectionIngredientsPrimarySearchRecipe).forEach(ingredient => {
-            for(let i = 0; i < ingredientsItems.length; i++){
-                if(ingredientsItemsLinks[i].innerHTML === ingredient){
+            ingredientsItems.forEach((ingredientItem, index) => {
+                if(ingredientsItemsLinks[index].innerHTML === ingredient){
                     //Afficher les ingrédients concernés
-                    ingredientsItems[i].classList.replace("display-none", "display-block");
+                    ingredientItem.classList.replace("display-none", "display-block");
                 }
-            }
+            });
         });
 
 
@@ -380,16 +377,17 @@ function addItemsSecondaryMenus(indexOfGoodRecipes){
 
         //Ne plus afficher les ingrédients/machines/ustentils qui ne sont pas contenu dans les recettes recherchées au champs de recherche principal
         //Appareils
-        for(let i = 0; i < machinesItems.length; i++){
-            machinesItems[i].classList.replace("display-block", "display-none");
-        }
+        machinesItems.forEach(machineItem => {
+            machineItem.classList.replace("display-block", "display-none");
+        });
+
         Array.from(collectionMachinesPrimarySearchRecipe).forEach(machine => {
-            for(let i = 0; i < machinesItems.length; i++){
-                if(machinesItemsLinks[i].innerHTML === machine){
+            machinesItems.forEach((machineItem, index) => {
+                if(machinesItemsLinks[index].innerHTML === machine){
                     //Afficher les ingrédients concernés
-                    machinesItems[i].classList.replace("display-none", "display-block");
+                    machineItem.classList.replace("display-none", "display-block");
                 }
-            }
+            });
         });
 
 
@@ -402,16 +400,17 @@ function addItemsSecondaryMenus(indexOfGoodRecipes){
         });
         //Ne plus afficher les ingrédients/machines/ustentils qui ne sont pas contenu dans les recettes recherchées au champs de recherche principal
         //Ustensiles
-        for(let i = 0; i < utensilsItems.length; i++){
-            utensilsItems[i].classList.replace("display-block", "display-none");
-        }
+        utensilsItems.forEach(utensilItem => {
+            utensilItem.classList.replace("display-block", "display-none");
+        });
+
         Array.from(collectionUtensilsPrimarySearchRecipe).forEach(utensil => {
-            for(let i = 0; i < utensilsItems.length; i++){
-                if(utensilsItemsLinks[i].innerHTML === utensil){
+            utensilsItems.forEach((utensilItem ,index) => {
+                if(utensilsItemsLinks[index].innerHTML === utensil){
                     //Afficher les ingrédients concernés
-                    utensilsItems[i].classList.replace("display-none", "display-block");
+                    utensilItem.classList.replace("display-none", "display-block");
                 }
-            }
+            });
         });
 
 }
@@ -424,14 +423,14 @@ function filterForIngredientsMachinesUtensiles(activeRecipes){
     if(selectedIngredients.size !== 0){
         let badRecipes = [];
         //Pour toutes les recettes actives
-        for(let i = 0; i < activeRecipes.length; i++){  
-            const recipe = recipes[activeRecipes[i]];
+        activeRecipes.forEach(activeRecipe => {
+            const recipe = recipes[activeRecipe];
             let control = true;
             let activeIngredients = "";
 
             //Pour tous les tags d'ingrédients actifs
-            for(let j = 0; j < selectedIngredients.size; j++){
-                const selectedIngredient = Array.from(selectedIngredients)[j];  //Récupération ingrédient actif
+            selectedIngredients.forEach(selectedCurrentIngredient => {
+                const selectedIngredient = selectedCurrentIngredient;  //Récupération ingrédient actif
 
                 tagsIngredientsSpan.forEach((tagIngredientSpan, index) => {
                     
@@ -441,16 +440,16 @@ function filterForIngredientsMachinesUtensiles(activeRecipes){
                 });
 
                 //Ajout des ingrédients
-                for(let k = 0; k < recipe.ingredients.length; k++){
-                    activeIngredients += recipe.ingredients[k].ingredient + " ";
-                }
+                activeIngredients = recipe.ingredients.reduce((accumulator, currentValue) => {
+                    return accumulator + currentValue.ingredient + " ";
+                }, "");
 
+                //Si la liste d'ingrédient n'inclu pas le tag actif
                 if(!activeIngredients.includes(selectedIngredient)){ //Si le tag n'est pas inclu dans les ingrédients, alors le control passe a false
                     control = false;
                 }
                 activeIngredients = "";
-            }
-
+            });
 
             if(control === false){
                 //Recette a masquer
@@ -459,17 +458,22 @@ function filterForIngredientsMachinesUtensiles(activeRecipes){
                 badRecipes.push(recipe.id - 1);
             }
             
-        }
+        });
         console.log(badRecipes);
         console.log(activeRecipes);
+        let testMap = undefined;
+
         //Suppression du tableau des mauvaises recettes
         for(let i = 0; i < activeRecipes.length; i++){
-            for(let z = 0; z < badRecipes.length; z++){
-                if(activeRecipes[i] === badRecipes[z]){
+            badRecipes.forEach(badRecipe => {
+                if(activeRecipes[i] === badRecipe){
                     activeRecipes.splice(i, 1);
+                    console.log(i);
                 }
-            }
+            });
         }
+
+        console.log(testMap);
     }
 
     console.log(activeRecipes);
