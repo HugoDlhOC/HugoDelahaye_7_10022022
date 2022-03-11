@@ -48,6 +48,19 @@ header #name-site{
    padding: 20px;
 }
 
+/*Message d'erreur*/
+#message{
+    margin-top: 130px;
+    justify-content: center;
+}
+
+#message p{
+    font-size: 18px;
+    padding: 10px;
+    background-color: #C7BEBE;
+    border-radius: 5px;
+}
+
 /*Champs de recherche secondaire*/
 .section-search nav{
     display: flex;
