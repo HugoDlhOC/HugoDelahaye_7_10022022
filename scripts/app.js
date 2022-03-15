@@ -68,11 +68,6 @@ addEventDisplayCloseSecondaryMenu("machines");
 //Menu ustentils
 addEventDisplayCloseSecondaryMenu("utensils");
 
-//Affichage de toutes les recettes
-console.log(recipes[8].ustensils);
-console.log(recipes[0]);
-console.log(recipes.length);
-
 //Pour toutes les recettes, ajout de l'HTML des recettes, ainsi que des éléments des menus secondaires
 let collectionOfIngredients = new Set();
 let tabOfIngredients = [];
@@ -239,7 +234,7 @@ function displayGoodRecipe(valueInput, recipes) {
   }
   console.log(tabResults);
 
-  filterForIngredientsMachinesUtensiles(tabResults);
+  filterForIngredientsMachinesUtensils(tabResults);
 
   return tabResults;
 }
@@ -347,65 +342,75 @@ utensilsItemsLinks.forEach((link) => {
   removeEventListener("click", fctEventLinkItemUtensil);
 });
 
-function addItemsSecondaryMenu(
-  indexOfGoodRecipes,
-  typeOfItem,
-  collectionItemsPrimarySearchRecipe,
-  listOfItems
-) {
+/*  Cette fonction ajoute tous les items des recettes actives
+ */
+function addItemsSecondaryMenus(indexOfGoodRecipes) {
   //Récupération de tous les ingrédients
-  collectionItemsPrimarySearchRecipe.clear(); //SUPPRIME tous les éléments du SET
+  collectionIngredientsPrimarySearchRecipe.clear(); //SUPPRIME tous les éléments du SET
   indexOfGoodRecipes.forEach((value) => {
-    if (typeOfItem === "ingredient") {
-      for (let i = 0; i < recipes[value].ingredients.length; i++) {
-        collectionItemsPrimarySearchRecipe.add(
-          recipes[value].ingredients[i].ingredient
-        );
-      }
-    } else if (typeOfItem === "machine") {
-      collectionItemsPrimarySearchRecipe.add(recipes[value].appliance);
-    } else if (typeOfItem === "utensil") {
-      for (let i = 0; i < recipes[value].ustensils.length; i++) {
-        collectionItemsPrimarySearchRecipe.add(recipes[value].ustensils[i]);
-      }
-    }
+    recipes[value].ingredients.forEach((ingredients) => {
+      collectionIngredientsPrimarySearchRecipe.add(ingredients.ingredient);
+    });
   });
 
   //Ne plus afficher les ingrédients/machines/ustentils qui ne sont pas contenu dans les recettes recherchées au champs de recherche principal
   //Ingrédients
-  for (let i = 0; i < listOfItems.length; i++) {
-    listOfItems[i].classList.replace("display-block", "display-none");
-  }
-  Array.from(collectionItemsPrimarySearchRecipe).forEach((item) => {
-    for (let i = 0; i < listOfItems.length; i++) {
-      if (ingredientsItemsLinks[i].innerHTML === item) {
+  ingredientsItems.forEach((ingredientItem) => {
+    ingredientItem.classList.replace("display-block", "display-none");
+  });
+
+  Array.from(collectionIngredientsPrimarySearchRecipe).forEach((ingredient) => {
+    ingredientsItems.forEach((ingredientItem, index) => {
+      if (ingredientsItemsLinks[index].innerHTML === ingredient) {
         //Afficher les ingrédients concernés
-        listOfItems[i].classList.replace("display-none", "display-block");
+        ingredientItem.classList.replace("display-none", "display-block");
       }
+    });
+  });
+
+  //Récupération de tous les appareils
+  collectionMachinesPrimarySearchRecipe.clear();
+  indexOfGoodRecipes.forEach((value) => {
+    collectionMachinesPrimarySearchRecipe.add(recipes[value].appliance);
+  });
+
+  //Ne plus afficher les ingrédients/machines/ustentils qui ne sont pas contenu dans les recettes recherchées au champs de recherche principal
+  //Appareils
+  machinesItems.forEach((machineItem) => {
+    machineItem.classList.replace("display-block", "display-none");
+  });
+
+  Array.from(collectionMachinesPrimarySearchRecipe).forEach((machine) => {
+    machinesItems.forEach((machineItem, index) => {
+      if (machinesItemsLinks[index].innerHTML === machine) {
+        //Afficher les ingrédients concernés
+        machineItem.classList.replace("display-none", "display-block");
+      }
+    });
+  });
+
+  //Récupération de tous les ustensils
+  collectionUtensilsPrimarySearchRecipe.clear();
+  indexOfGoodRecipes.forEach((value) => {
+    for (let i = 0; i < recipes[value].ustensils.length; i++) {
+      collectionUtensilsPrimarySearchRecipe.add(recipes[value].ustensils[i]);
     }
   });
-}
+  
+  //Ne plus afficher les ingrédients/machines/ustentils qui ne sont pas contenu dans les recettes recherchées au champs de recherche principal
+  //Ustensiles
+  utensilsItems.forEach((utensilItem) => {
+    utensilItem.classList.replace("display-block", "display-none");
+  });
 
-//Fonction qui met à jour les items des 3 menus secondaires
-function addItemsSecondaryMenus(indexOfGoodRecipes) {
-  addItemsSecondaryMenu(
-    indexOfGoodRecipes,
-    "ingredient",
-    collectionIngredientsPrimarySearchRecipe,
-    ingredientsItems
-  );
-  addItemsSecondaryMenu(
-    indexOfGoodRecipes,
-    "machine",
-    collectionMachinesPrimarySearchRecipe,
-    machinesItems
-  );
-  addItemsSecondaryMenu(
-    indexOfGoodRecipes,
-    "utensil",
-    collectionUtensilsPrimarySearchRecipe,
-    utensilsItems
-  );
+  Array.from(collectionUtensilsPrimarySearchRecipe).forEach((utensil) => {
+    utensilsItems.forEach((utensilItem, index) => {
+      if (utensilsItemsLinks[index].innerHTML === utensil) {
+        //Afficher les ingrédients concernés
+        utensilItem.classList.replace("display-none", "display-block");
+      }
+    });
+  });
 }
 
 //Fonction de filtrage qui peut s'appliquer au 3 types d'items (ingrédients - appareils - ustensils)
@@ -482,7 +487,7 @@ function filterForItems(
 }
 
 //FONCTION QUI LANCE LES 3 FONCTIONS DE FITRAGES DES INGRÉDIENTS - APPAREILS - USTENSILS
-function filterForIngredientsMachinesUtensiles(activeRecipes) {
+function filterForIngredientsMachinesUtensils(activeRecipes) {
   console.log(activeRecipes);
 
   activeRecipes = filterForItems(
