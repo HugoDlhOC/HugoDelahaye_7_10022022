@@ -222,10 +222,10 @@ function displayGoodRecipe(valueInput, recipes) {
     for (let i = 0; i < recipes.length; i++) {
       tabResults.push(i);
     }
-    document.querySelectorAll(".recipe-card article").forEach((article) => {
-      article.classList.remove("display-none");
-      article.classList.add("display-block");
-    });
+    for(let i = 0; i < document.querySelectorAll(".recipe-card article").length; i++){
+      document.querySelectorAll(".recipe-card article")[i].classList.remove("display-none");
+      document.querySelectorAll(".recipe-card article")[i].classList.add("display-block");
+    }
   }
   if (tabResults.length === 0) {
     displayMessageRecipeNoFound();
