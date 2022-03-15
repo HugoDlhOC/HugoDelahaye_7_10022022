@@ -1,18 +1,28 @@
 import { recipes } from "../ressources/data/recipes.js";
 import { Recipe } from "./classes/Recipe.js";
 
+/**
+ * Fonction qui affiche le message indiquant qu'il n'y a pas de recette trouvée
+ */
 function displayMessageRecipeNoFound() {
   document
     .querySelector("#message")
     .classList.replace("display-none", "display-flex");
 }
 
+/**
+ * Fonction qui cache le message indiquant qu'il n'y a pas de recette trouvée
+ */
 function hideMessageRecipeNoFound() {
   document
     .querySelector("#message")
     .classList.replace("display-flex", "display-none");
 }
 
+/**
+ * Fonction qui affiche les ajoute les évènements d'ouverture et de fermeture des 3 menus secondaires
+ * @param { any } nameOfMenu
+ */
 function addEventDisplayCloseSecondaryMenu(nameOfMenu) {
   const linkAndIconHideMenu = document.querySelector(
     `#input-icon-${nameOfMenu}--hide`
@@ -130,7 +140,10 @@ const mainSearchInput = document.querySelector("#main-search-field");
 mainSearchInput.addEventListener("input", fctSearchSortRecipes);
 let inputUser = undefined;
 
-//Déclancher la recherche uniquement quand le nombre de caractère tapé par l'utilisateur est supérieur a 2
+/**
+ * Fonction pour l'évènement input de la recherche principale qui va stocker ce que l'utilisateur saisie et lance la fonction de tri principale => displayGoodRecipes()
+ * @param { any } e
+ */
 function fctSearchSortRecipes(e) {
   inputUser = e.target.value;
   displayGoodRecipe(inputUser.trim().toLowerCase(), recipes);
@@ -146,11 +159,14 @@ let utensilsItems = document.querySelectorAll(".utensil");
 let ingredientsItemsLinks = document.querySelectorAll(".ingredient a");
 let machinesItemsLinks = document.querySelectorAll(".machine a");
 let utensilsItemsLinks = document.querySelectorAll(".utensil a");
-console.log(ingredientsItems);
 
-/*  Cette fonction controle si la valeur tapée dans le champs de recherche principal correspond à une ou plusieurs recette par le 
-    controle de son nom, de sa description et de ses ingrédients.
-*/
+
+/**
+ * Cette fonction controle si la valeur tapée dans le champs de recherche principal correspond à une ou * plusieurs recette par le controle de son nom, de sa description et de ses ingrédients.
+ * @param { any } valueInput
+ * @param { any } recipes
+ * @return {number[]} 
+ */
 function displayGoodRecipe(valueInput, recipes) {
   let tabResults = [];
 
@@ -159,11 +175,8 @@ function displayGoodRecipe(valueInput, recipes) {
       let ifValueFind = false; //Permet d'éviter les doublons
       //Controle noms
       if (ifValueFind === false) {
-        console.log(recipes[i]);
         if (recipes[i].name.toLowerCase().includes(valueInput)) {
-          console.log(`NOM INCLU valeur : --${i}--` + recipes[i].name);
           tabResults.push(i);
-          console.log(tabResults);
           ifValueFind = true;
         }
       }
@@ -171,18 +184,12 @@ function displayGoodRecipe(valueInput, recipes) {
       //Controle ingredients
       if (ifValueFind === false) {
         for (let j = 0; j < recipes[i].ingredients.length; j++) {
-          //console.log(recipes[i].ingredients[j]);
           if (
             recipes[i].ingredients[j].ingredient
               .toLowerCase()
               .includes(valueInput)
           ) {
-            console.log(
-              `INGREDIENT INCLU valeur : --${i}--` +
-                recipes[i].ingredients[j].ingredient
-            );
             tabResults.push(i);
-            console.log(tabResults);
             ifValueFind = true;
           }
         }
@@ -191,9 +198,7 @@ function displayGoodRecipe(valueInput, recipes) {
       //Controle description
       if (ifValueFind === false) {
         if (recipes[i].description.toLowerCase().includes(valueInput)) {
-          console.log(`DESCRIPTION INCLUE valeur : --${i}--` + recipes[i].name);
           tabResults.push(i);
-          console.log(tabResults);
           ifValueFind = true;
         }
       }
@@ -232,7 +237,6 @@ function displayGoodRecipe(valueInput, recipes) {
   } else {
     hideMessageRecipeNoFound();
   }
-  console.log(tabResults);
 
   filterForIngredientsMachinesUtensils(tabResults);
 
@@ -260,6 +264,11 @@ inputSortMenuUtensilsDisplay.addEventListener("input", (e) => {
 });
 
 //Cette fonction permet d'afficher les items qui correspondent à ce qui a été saisi dans les champs de recherche secondaires
+/**
+ * Cette fonction permet d'afficher les items qui correspondent à ce qui a été saisi dans les champs de recherche secondaires
+ * @param { any } e
+ * @param { any } typeOfItem
+ */
 function fctSecondarySearchSort(e, typeOfItem) {
   //Récupérer les éléments a masquer (qui ne correspondent pas à ce qui est saisi)
   const itemsDisplay = document.getElementsByClassName(
@@ -277,8 +286,6 @@ function fctSecondarySearchSort(e, typeOfItem) {
     if (
       itemsDisplay[i].children[0].innerHTML.toLowerCase().includes(inputUser)
     ) {
-      console.log("ça correspond");
-      console.log(itemsDisplay);
       itemsDisplay[i].classList.remove("display-none");
     }
   }
@@ -297,7 +304,6 @@ ingredientsItemsLinks.forEach((link) => {
   function fctEventLinkItemIngredient(link) {
     //Ajout de l'item dans le tableau
     selectedIngredients.add(link.innerHTML);
-    console.log(selectedIngredients);
 
     displayGoodRecipe(inputUser, recipes);
   }
@@ -316,7 +322,6 @@ machinesItemsLinks.forEach((link) => {
   function fctEventLinkItemMachine(link) {
     //Ajout de l'item dans le tableau
     selectedMachines.add(link.innerHTML);
-    console.log(selectedMachines);
     //Appel fonction de filtrage
     displayGoodRecipe(inputUser, recipes);
   }
@@ -335,14 +340,15 @@ utensilsItemsLinks.forEach((link) => {
   function fctEventLinkItemUtensil(link) {
     //Ajout de l'item dans le tableau
     selectedUtensils.add(link.innerHTML);
-    console.log(selectedUtensils);
     //Appel fonction de filtrage
     displayGoodRecipe(inputUser, recipes);
   }
   removeEventListener("click", fctEventLinkItemUtensil);
 });
 
-/*  Cette fonction ajoute tous les items des recettes actives
+/**
+ * Ajout des items des recettes actives
+ * @param { any } indexOfGoodRecipes
  */
 function addItemsSecondaryMenus(indexOfGoodRecipes) {
   //Récupération de tous les ingrédients
@@ -413,7 +419,15 @@ function addItemsSecondaryMenus(indexOfGoodRecipes) {
   });
 }
 
-//Fonction de filtrage qui peut s'appliquer au 3 types d'items (ingrédients - appareils - ustensils)
+/**
+ * Fonction de filtrage qui peut s'appliquer au 3 types d'items (ingrédients - appareils - ustensils)
+ * @param { any } activeRecipes
+ * @param { string } typeOfFilter "ingredient" ou "machine" ou "utensil"
+ * @param { Set } selectedTypeOfItem
+ * @param { NodeList } tagsTypeOfItemSpan
+ * @param { NodeList } tagTypeOfItemDiv
+ * @return { any }
+ */
 function filterForItems(
   activeRecipes,
   typeOfFilter,
@@ -472,8 +486,6 @@ function filterForItems(
         badRecipes.push(recipe.id - 1);
       }
     }
-    console.log(badRecipes);
-    console.log(activeRecipes);
     //Suppression du tableau des mauvaises recettes
     for (let i = 0; i < activeRecipes.length; i++) {
       for (let z = 0; z < badRecipes.length; z++) {
@@ -486,9 +498,11 @@ function filterForItems(
   return activeRecipes;
 }
 
-//FONCTION QUI LANCE LES 3 FONCTIONS DE FITRAGES DES INGRÉDIENTS - APPAREILS - USTENSILS
+/**
+ * Fonction qui lance la fonction de filtrage 3 fois (pour chaque type d'items)
+ * @param { any } activeRecipes 
+ */
 function filterForIngredientsMachinesUtensils(activeRecipes) {
-  console.log(activeRecipes);
 
   activeRecipes = filterForItems(
     activeRecipes,
@@ -549,22 +563,23 @@ tagsDeleteUtensilsBtn.forEach((tagDeleteBtn, index) => {
   });
 });
 
-//FONCTION POUR SUPPRIMER LES FILTRES
+/**
+ * Permet la suppression d'un filtre, sert aux évènement click sur les icones de fermeture des filtres
+ * @param { any } e
+ * @param { any } index
+ * @param {Set } collectionOfElements
+ * @param { NodeList } elementsTagsSpan
+ */
 function deleteFilter(e, index, collectionOfElements, elementsTagsSpan) {
-  console.log(e.target.parentElement.parentElement);
   e.target.parentElement.parentElement.classList.replace(
     "display-flex",
     "display-none"
   );
-  console.log(collectionOfElements);
   collectionOfElements.forEach((selectElement) => {
-    console.log(selectElement);
-    console.log(elementsTagsSpan[index].innerHTML);
 
     //Si l'élément séléctionné est égal à la valeur HTML du tag affiché, alors on supprime l'élément du Set.
     if (selectElement === elementsTagsSpan[index].innerHTML) {
       collectionOfElements.delete(elementsTagsSpan[index].innerHTML);
-      console.log(collectionOfElements);
 
       if (inputUser === undefined) {
         document.querySelectorAll(".recipe-card article").forEach((article) => {
