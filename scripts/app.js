@@ -157,37 +157,24 @@ function displayGoodRecipe(valueInput, recipes) {
   if (valueInput !== undefined && valueInput.length > 2) {
     recipes.forEach((recipe, index) => {
       let ifValueFind = false; //Permet d'éviter les doublons
-      //Controle noms
+
+      //Controle nom - description
       if (ifValueFind === false) {
-        console.log(recipe);
-        if (recipe.name.toLowerCase().includes(valueInput)) {
+
+        if(String(Array(recipe).filter(recipe => recipe.name.toLowerCase().includes(valueInput) || recipe.description.toLowerCase().includes(valueInput))) !== ""){ //Si le résultat n'est pas vide, alors recette valide
           tabResults.push(index);
           ifValueFind = true;
         }
       }
 
-      //Controle ingredients
+      //Controle ingredients -- some a utiliser 
       if (ifValueFind === false) {
-        recipe.ingredients.forEach(ingredients => {
-          if (
-            ingredients.ingredient
-              .toLowerCase()
-              .includes(valueInput)
-          ) {
-            tabResults.push(index);
-            ifValueFind = true;
-          }
-        });
-      }
-
-      //Controle description
-      if (ifValueFind === false) {
-        if (recipe.description.toLowerCase().includes(valueInput)) {
+        if(ifValueFind = recipe.ingredients.some(ingredients => ingredients.ingredient.toLowerCase().includes(valueInput))){
           tabResults.push(index);
-          ifValueFind = true;
-        }
+        };
       }
     });
+
 
     let articlesRecipes = document.querySelectorAll(".recipe-card article");
     //Affichage des bonnes recettes
