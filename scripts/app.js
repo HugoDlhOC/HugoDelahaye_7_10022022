@@ -419,7 +419,7 @@ function addItemsSecondaryMenus(indexOfGoodRecipes) {
  * @param { NodeList } tagTypeOfItemDiv
  * @return { any }
  */
-function filterForItems(
+ function filterForItems(
   activeRecipes,
   typeOfFilter,
   selectedTypeOfItem,
@@ -430,14 +430,14 @@ function filterForItems(
   if (selectedTypeOfItem.size !== 0) {
     let badRecipes = [];
     //Pour toutes les recettes actives
-    activeRecipes.forEach(activeRecipe => {
-      const recipe = recipes[activeRecipe];
+    for (let i = 0; i < activeRecipes.length; i++) {
+      const recipe = recipes[activeRecipes[i]];
       let control = true;
       let activeFilter = "";
 
       //Pour tous les tags d'ingrédients actifs
-      Array.from(selectedTypeOfItem).forEach(selectedElement => {
-        const selectedActiveItem = selectedElement; //Récupération machine active
+      for (let j = 0; j < selectedTypeOfItem.size; j++) {
+        const selectedActiveItem = Array.from(selectedTypeOfItem)[j]; //Récupération machine active
 
         tagsTypeOfItemSpan.forEach((tagTypeOfItemSpan, index) => {
           if (tagTypeOfItemSpan.innerHTML === selectedActiveItem) {
@@ -450,9 +450,9 @@ function filterForItems(
 
         if (typeOfFilter === "ingredient") {
           //Ajout des ingrédients
-          activeFilter = recipe.ingredients.reduce((accumulator, currentValue) => {
-            return accumulator + currentValue.ingredient + " ";
-          }, "");
+          for (let k = 0; k < recipe.ingredients.length; k++) {
+            activeFilter += recipe.ingredients[k].ingredient + " ";
+          }
         } else if (typeOfFilter === "machine") {
           //Ajout des appareils
           activeFilter += recipe.appliance;
@@ -468,7 +468,7 @@ function filterForItems(
           control = false;
         }
         activeFilter = "";
-      });
+      }
 
       if (control === false) {
         //Recette a masquer
@@ -476,16 +476,15 @@ function filterForItems(
         document.getElementById(recipe.id).classList.add("display-none");
         badRecipes.push(recipe.id - 1);
       }
-    });
-
+    }
     //Suppression du tableau des mauvaises recettes
-    activeRecipes.forEach((activeRecipe, index) => {
-      badRecipes.forEach(badRecipe => {
-        if (activeRecipe === badRecipe) {
-          activeRecipes.splice(index, 1);
+    for (let i = 0; i < activeRecipes.length; i++) {
+      for (let z = 0; z < badRecipes.length; z++) {
+        if (activeRecipes[i] === badRecipes[z]) {
+          activeRecipes.splice(i, 1);
         }
-      });
-    });
+      }
+    }
   }
   return activeRecipes;
 }
