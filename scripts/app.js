@@ -1,137 +1,6 @@
 import { recipes } from "../ressources/data/recipes.js";
-import { Recipe } from "./classes/Recipe.js";
-
-/**
- * Fonction qui affiche le message indiquant qu'il n'y a pas de recette trouvée
- */
-function displayMessageRecipeNoFound() {
-  document
-    .querySelector("#message")
-    .classList.replace("display-none", "display-flex");
-}
-
-/**
- * Fonction qui cache le message indiquant qu'il n'y a pas de recette trouvée
- */
-function hideMessageRecipeNoFound() {
-  document
-    .querySelector("#message")
-    .classList.replace("display-flex", "display-none");
-}
-
-/**
- * Fonction qui affiche les ajoute les évènements d'ouverture et de fermeture des 3 menus secondaires
- * @param { any } nameOfMenu
- */
-function addEventDisplayCloseSecondaryMenu(nameOfMenu) {
-  const linkAndIconHideMenu = document.querySelector(
-    `#input-icon-${nameOfMenu}--hide`
-  );
-  const linkAndIconDisplayMenu = document.querySelector(
-    `#input-icon-${nameOfMenu}--display`
-  );
-  const inputSortMenuHide = document.querySelector(
-    `#input-${nameOfMenu}--hide`
-  );
-  const inputSortMenuDisplay = document.querySelector(
-    `#input-${nameOfMenu}--display`
-  );
-  const iconSortMenuHide = document.querySelector(`#icon-${nameOfMenu}--hide`);
-  const iconSortMenuDisplay = document.querySelector(
-    `#icon-${nameOfMenu}--display`
-  );
-  const menu = document.querySelector(`#${nameOfMenu}-menu-items`);
-
-  inputSortMenuHide.addEventListener("click", fctOpenMenu);
-  iconSortMenuHide.addEventListener("click", fctOpenMenu);
-  inputSortMenuDisplay.addEventListener("click", fctCloseMenu);
-  iconSortMenuDisplay.addEventListener("click", fctCloseMenu);
-
-  function fctOpenMenu() {
-    menu.classList.replace("display-none", "display-grid");
-    menu.classList.add("mr-4");
-    linkAndIconHideMenu.classList.replace("display-flex", "display-none");
-    linkAndIconDisplayMenu.classList.replace("display-none", "display-flex");
-    linkAndIconDisplayMenu.classList.add("mr-4");
-    inputSortMenuHide.classList.replace("display-block", "display-none");
-    inputSortMenuDisplay.classList.replace("display-none", "display-block");
-    inputSortMenuDisplay.focus();
-  }
-
-  function fctCloseMenu() {
-    menu.classList.replace("display-grid", "display-none");
-    menu.classList.remove("mr-4");
-    linkAndIconHideMenu.classList.replace("display-none", "display-flex");
-    linkAndIconDisplayMenu.classList.replace("display-flex", "display-none");
-    linkAndIconDisplayMenu.classList.remove("mr-4");
-    inputSortMenuHide.classList.replace("display-none", "display-block");
-    inputSortMenuDisplay.classList.replace("display-block", "display-none");
-  }
-}
-//Afficher les menus au clic sur le lien ou l'icone
-//Menu ingrédients
-addEventDisplayCloseSecondaryMenu("ingredients");
-
-//Menu appareils
-addEventDisplayCloseSecondaryMenu("machines");
-
-//Menu ustentils
-addEventDisplayCloseSecondaryMenu("utensils");
-
-//Pour toutes les recettes, ajout de l'HTML des recettes, ainsi que des éléments des menus secondaires
-let collectionOfIngredients = new Set();
-let tabOfIngredients = [];
-let collectionOfMachines = new Set();
-let tabOfMachines = [];
-let collectionOfUtensils = new Set();
-let tabOfUtensils = [];
-
-recipes.forEach((recipe) => {
-  //Création objet recette avec la recette actuelle passée au constructeur
-  const objRecipe = new Recipe(recipe);
-  objRecipe.addHtmlOfRecipe();
-
-  //Ajout de tous les ingredients dans la collection de valeur, puis conversion de la collection en tab
-  recipe.ingredients.forEach((ingredient) => {
-    collectionOfIngredients.add(ingredient.ingredient);
-  });
-  tabOfIngredients = Array.from(collectionOfIngredients);
-
-  //Ajout de tous les appareils dans la collection de valeur, puis conversion de la collection en tab
-  collectionOfMachines.add(recipe.appliance);
-  tabOfMachines = Array.from(collectionOfMachines);
-
-  //Ajout de tous les ustensils dans la collection de valeur,  puis conversion de la collection en tab
-  recipe.ustensils.forEach((ustensil) => {
-    collectionOfUtensils.add(ustensil);
-  });
-  tabOfUtensils = Array.from(collectionOfUtensils);
-});
-
-//Ajout des ingredients dans le menu secondaire
-const ingredientsMenu = document.querySelector(`#ingredients-menu-items`);
-Recipe.addHtmlSecondaryMenuElements(
-  ingredientsMenu,
-  tabOfIngredients,
-  "ingredient"
-);
-
-//Ajout des appareils dans le menu secondaire
-const machinesMenu = document.querySelector(`#machines-menu-items`);
-Recipe.addHtmlSecondaryMenuElements(machinesMenu, tabOfMachines, "machine");
-
-//Ajout des ustensils dans le menu secondaire
-const utensilsMenu = document.querySelector(`#utensils-menu-items`);
-Recipe.addHtmlSecondaryMenuElements(utensilsMenu, tabOfUtensils, "utensil");
-
-//Ajouter tous l'HTML des tags
-const tagsContainer = document.querySelector(".tags-container");
-//Menu ingrédients
-Recipe.addHtmlOfTags(tagsContainer, tabOfIngredients, "ingredient-tag");
-//Menu appareils
-Recipe.addHtmlOfTags(tagsContainer, tabOfMachines, "machine-tag");
-//Menu appareils
-Recipe.addHtmlOfTags(tagsContainer, tabOfUtensils, "utensil-tag");
+import { displayMessageRecipeNoFound } from "./messageRecipeEmpty.js";
+import { hideMessageRecipeNoFound } from "./messageRecipeEmpty.js";
 
 //Fonctionalitée de tri des recettes via le champs de recherche principale
 //Récupérer ce qui est tapé dans le champs de saisi
@@ -159,7 +28,7 @@ let utensilsItems = document.querySelectorAll(".utensil");
 let ingredientsItemsLinks = document.querySelectorAll(".ingredient a");
 let machinesItemsLinks = document.querySelectorAll(".machine a");
 let utensilsItemsLinks = document.querySelectorAll(".utensil a");
-console.log(ingredientsItems);
+
 
 /**
  * Cette fonction controle si la valeur tapée dans le champs de recherche principal correspond à une ou * plusieurs recette par le controle de son nom, de sa description et de ses ingrédients.
@@ -250,6 +119,7 @@ inputSortMenuUtensilsDisplay.addEventListener("input", (e) => {
   fctSecondarySearchSort(e, "utensil");
 });
 
+//Cette fonction permet d'afficher les items qui correspondent à ce qui a été saisi dans les champs de recherche secondaires
 /**
  * Cette fonction permet d'afficher les items qui correspondent à ce qui a été saisi dans les champs de recherche secondaires
  * @param { any } e
@@ -272,8 +142,6 @@ function fctSecondarySearchSort(e, typeOfItem) {
     if (
       itemsDisplay[i].children[0].innerHTML.toLowerCase().includes(inputUser)
     ) {
-      console.log("ça correspond");
-      console.log(itemsDisplay);
       itemsDisplay[i].classList.remove("display-none");
     }
   }
@@ -292,7 +160,6 @@ ingredientsItemsLinks.forEach((link) => {
   function fctEventLinkItemIngredient(link) {
     //Ajout de l'item dans le tableau
     selectedIngredients.add(link.innerHTML);
-    console.log(selectedIngredients);
 
     displayGoodRecipe(inputUser, recipes);
   }
@@ -311,7 +178,6 @@ machinesItemsLinks.forEach((link) => {
   function fctEventLinkItemMachine(link) {
     //Ajout de l'item dans le tableau
     selectedMachines.add(link.innerHTML);
-    console.log(selectedMachines);
     //Appel fonction de filtrage
     displayGoodRecipe(inputUser, recipes);
   }
@@ -330,7 +196,6 @@ utensilsItemsLinks.forEach((link) => {
   function fctEventLinkItemUtensil(link) {
     //Ajout de l'item dans le tableau
     selectedUtensils.add(link.innerHTML);
-    console.log(selectedUtensils);
     //Appel fonction de filtrage
     displayGoodRecipe(inputUser, recipes);
   }
@@ -419,7 +284,7 @@ function addItemsSecondaryMenus(indexOfGoodRecipes) {
  * @param { NodeList } tagTypeOfItemDiv
  * @return { any }
  */
- function filterForItems(
+function filterForItems(
   activeRecipes,
   typeOfFilter,
   selectedTypeOfItem,
@@ -430,14 +295,14 @@ function addItemsSecondaryMenus(indexOfGoodRecipes) {
   if (selectedTypeOfItem.size !== 0) {
     let badRecipes = [];
     //Pour toutes les recettes actives
-    for (let i = 0; i < activeRecipes.length; i++) {
-      const recipe = recipes[activeRecipes[i]];
+    activeRecipes.forEach(activeRecipe => {
+      const recipe = recipes[activeRecipe];
       let control = true;
       let activeFilter = "";
 
       //Pour tous les tags d'ingrédients actifs
-      for (let j = 0; j < selectedTypeOfItem.size; j++) {
-        const selectedActiveItem = Array.from(selectedTypeOfItem)[j]; //Récupération machine active
+      Array.from(selectedTypeOfItem).forEach(selectedItem => {
+        const selectedActiveItem = selectedItem; //Récupération machine active
 
         tagsTypeOfItemSpan.forEach((tagTypeOfItemSpan, index) => {
           if (tagTypeOfItemSpan.innerHTML === selectedActiveItem) {
@@ -450,17 +315,17 @@ function addItemsSecondaryMenus(indexOfGoodRecipes) {
 
         if (typeOfFilter === "ingredient") {
           //Ajout des ingrédients
-          for (let k = 0; k < recipe.ingredients.length; k++) {
-            activeFilter += recipe.ingredients[k].ingredient + " ";
-          }
+          activeFilter = recipe.ingredients.reduce((accumulator, currentValue) => {
+            return accumulator + currentValue.ingredient + " ";
+          }, "");
         } else if (typeOfFilter === "machine") {
           //Ajout des appareils
           activeFilter += recipe.appliance;
         } else if (typeOfFilter === "utensil") {
           //Ajout des ustensils
-          for (let k = 0; k < recipe.ustensils.length; k++) {
-            activeFilter += recipe.ustensils[k] + " ";
-          }
+          recipe.ustensils.forEach(ustensils => {
+            activeFilter += ustensils + " ";
+          });
         }
 
         if (!activeFilter.includes(selectedActiveItem)) {
@@ -468,7 +333,7 @@ function addItemsSecondaryMenus(indexOfGoodRecipes) {
           control = false;
         }
         activeFilter = "";
-      }
+      });
 
       if (control === false) {
         //Recette a masquer
@@ -476,7 +341,7 @@ function addItemsSecondaryMenus(indexOfGoodRecipes) {
         document.getElementById(recipe.id).classList.add("display-none");
         badRecipes.push(recipe.id - 1);
       }
-    }
+    });
     //Suppression du tableau des mauvaises recettes
     for (let i = 0; i < activeRecipes.length; i++) {
       for (let z = 0; z < badRecipes.length; z++) {
@@ -494,7 +359,6 @@ function addItemsSecondaryMenus(indexOfGoodRecipes) {
  * @param { any } activeRecipes 
  */
 function filterForIngredientsMachinesUtensils(activeRecipes) {
-  console.log(activeRecipes);
 
   activeRecipes = filterForItems(
     activeRecipes,
@@ -563,20 +427,15 @@ tagsDeleteUtensilsBtn.forEach((tagDeleteBtn, index) => {
  * @param { NodeList } elementsTagsSpan
  */
 function deleteFilter(e, index, collectionOfElements, elementsTagsSpan) {
-  console.log(e.target.parentElement.parentElement);
   e.target.parentElement.parentElement.classList.replace(
     "display-flex",
     "display-none"
   );
-  console.log(collectionOfElements);
   collectionOfElements.forEach((selectElement) => {
-    console.log(selectElement);
-    console.log(elementsTagsSpan[index].innerHTML);
 
     //Si l'élément séléctionné est égal à la valeur HTML du tag affiché, alors on supprime l'élément du Set.
     if (selectElement === elementsTagsSpan[index].innerHTML) {
       collectionOfElements.delete(elementsTagsSpan[index].innerHTML);
-      console.log(collectionOfElements);
 
       if (inputUser === undefined) {
         document.querySelectorAll(".recipe-card article").forEach((article) => {
