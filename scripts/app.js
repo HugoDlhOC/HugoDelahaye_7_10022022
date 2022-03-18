@@ -308,14 +308,14 @@ function filterForItems(
   if (selectedTypeOfItem.size !== 0) {
     let badRecipes = [];
     //Pour toutes les recettes actives
-    for (let i = 0; i < activeRecipes.length; i++) {
-      const recipe = recipes[activeRecipes[i]];
+    activeRecipes.forEach(activeRecipe => {
+      const recipe = recipes[activeRecipe];
       let control = true;
       let activeFilter = "";
 
       //Pour tous les tags d'ingrédients actifs
-      for (let j = 0; j < selectedTypeOfItem.size; j++) {
-        const selectedActiveItem = Array.from(selectedTypeOfItem)[j]; //Récupération machine active
+      Array.from(selectedTypeOfItem).forEach(selectedItem => {
+        const selectedActiveItem = selectedItem; //Récupération machine active
 
         tagsTypeOfItemSpan.forEach((tagTypeOfItemSpan, index) => {
           if (tagTypeOfItemSpan.innerHTML === selectedActiveItem) {
@@ -328,17 +328,17 @@ function filterForItems(
 
         if (typeOfFilter === "ingredient") {
           //Ajout des ingrédients
-          for (let k = 0; k < recipe.ingredients.length; k++) {
-            activeFilter += recipe.ingredients[k].ingredient + " ";
-          }
+          activeFilter = recipe.ingredients.reduce((accumulator, currentValue) => {
+            return accumulator + currentValue.ingredient + " ";
+          }, "");
         } else if (typeOfFilter === "machine") {
           //Ajout des appareils
           activeFilter += recipe.appliance;
         } else if (typeOfFilter === "utensil") {
           //Ajout des ustensils
-          for (let k = 0; k < recipe.ustensils.length; k++) {
-            activeFilter += recipe.ustensils[k] + " ";
-          }
+          recipe.ustensils.forEach(ustensils => {
+            activeFilter += ustensils + " ";
+          });
         }
 
         if (!activeFilter.includes(selectedActiveItem)) {
@@ -346,7 +346,7 @@ function filterForItems(
           control = false;
         }
         activeFilter = "";
-      }
+      });
 
       if (control === false) {
         //Recette a masquer
@@ -354,7 +354,7 @@ function filterForItems(
         document.getElementById(recipe.id).classList.add("display-none");
         badRecipes.push(recipe.id - 1);
       }
-    }
+    });
     //Suppression du tableau des mauvaises recettes
     for (let i = 0; i < activeRecipes.length; i++) {
       for (let z = 0; z < badRecipes.length; z++) {
