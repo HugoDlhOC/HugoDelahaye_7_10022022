@@ -297,7 +297,7 @@ function addItemsSecondaryMenus(indexOfGoodRecipes) {
  * @param { NodeList } tagTypeOfItemDiv
  * @return { any }
  */
-function filterForItems(
+ function filterForItems(
   activeRecipes,
   typeOfFilter,
   selectedTypeOfItem,
@@ -340,6 +340,9 @@ function filterForItems(
             activeFilter += ustensils + " ";
           });
         }
+        else{
+          console.log("The tag type is not known.");
+        }
 
         if (!activeFilter.includes(selectedActiveItem)) {
           //Si le tag n'est pas inclu dans les machines, alors le control passe a false
@@ -355,7 +358,7 @@ function filterForItems(
         badRecipes.push(recipe.id - 1);
       }
     });
-    //Suppression du tableau des mauvaises recettes
+    //Suppression des mauvaises recettes du tableau
     for (let i = 0; i < activeRecipes.length; i++) {
       for (let z = 0; z < badRecipes.length; z++) {
         if (activeRecipes[i] === badRecipes[z]) {
