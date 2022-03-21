@@ -33,7 +33,7 @@ recipes.forEach((recipe) => {
 });
 
 //Ajout des ingredients dans le menu secondaire
-const ingredientsMenu = document.querySelector(`#ingredients-menu-items`);
+const ingredientsMenu = document.querySelector("#ingredients-menu-items");
 Recipe.addHtmlSecondaryMenuElements(
   ingredientsMenu,
   tabOfIngredients,
@@ -41,11 +41,11 @@ Recipe.addHtmlSecondaryMenuElements(
 );
 
 //Ajout des appareils dans le menu secondaire
-const machinesMenu = document.querySelector(`#machines-menu-items`);
+const machinesMenu = document.querySelector("#machines-menu-items");
 Recipe.addHtmlSecondaryMenuElements(machinesMenu, tabOfMachines, "machine");
 
 //Ajout des ustensils dans le menu secondaire
-const utensilsMenu = document.querySelector(`#utensils-menu-items`);
+const utensilsMenu = document.querySelector("#utensils-menu-items");
 Recipe.addHtmlSecondaryMenuElements(utensilsMenu, tabOfUtensils, "utensil");
 
 //Ajouter tous l'HTML des tags

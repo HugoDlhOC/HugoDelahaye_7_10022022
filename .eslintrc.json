@@ -5,16 +5,16 @@
     },
     "extends": "eslint:recommended",
     "parserOptions": {
+        "sourceType": "module",
         "ecmaVersion": "latest"
     },
     "rules": {
         "quotes": [
             "error",
             "double"
-        ],
-        "semi": [
-            "error",
-            "always"
         ]
     }
+    
 }
+
+

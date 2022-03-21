@@ -114,13 +114,13 @@ function displayGoodRecipe(valueInput, recipes) {
 
 //Fonctionalitée de tri des recettes pour le champs de recherche secondaire Ingrédients
 const inputSortMenuIngredientsDisplay = document.querySelector(
-  `#input-ingredients--display`
+  "#input-ingredients--display"
 );
 const inputSortMenuMachinesDisplay = document.querySelector(
-  `#input-machines--display`
+  "#input-machines--display"
 );
 const inputSortMenuUtensilsDisplay = document.querySelector(
-  `#input-utensils--display`
+  "#input-utensils--display"
 );
 inputSortMenuIngredientsDisplay.addEventListener("input", (e) => {
   fctSecondarySearchSort(e, "ingredient");
