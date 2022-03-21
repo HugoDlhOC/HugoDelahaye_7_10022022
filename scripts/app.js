@@ -53,7 +53,7 @@ function displayGoodRecipe(valueInput, recipes) {
 
       //Controle ingredients
       if (ifValueFind === false) {
-        if(ifValueFind === recipe.ingredients.some(ingredients => ingredients.ingredient.toLowerCase().includes(valueInput))){
+        if(recipe.ingredients.some(ingredients => ingredients.ingredient.toLowerCase().includes(valueInput))){
           tabResults.push(index);
         }
       }
