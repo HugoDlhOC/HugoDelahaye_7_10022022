@@ -55,6 +55,7 @@ function displayGoodRecipe(valueInput, recipes) {
       if (ifValueFind === false) {
         if(recipe.ingredients.some(ingredients => ingredients.ingredient.toLowerCase().includes(valueInput))){
           tabResults.push(index);
+          ifValueFind = true;
         }
       }
     });
