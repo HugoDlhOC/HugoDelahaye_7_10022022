@@ -42,9 +42,9 @@ function displayGoodRecipe(valueInput, recipes) {
   if (valueInput !== undefined && valueInput.length > 2) {
     for (let i = 0; i < recipes.length; i++) {
       let ifValueFind = false; //Permet d'éviter les doublons
-      //Controle noms
+      //Controle nom - description
       if (ifValueFind === false) {
-        if (recipes[i].name.toLowerCase().includes(valueInput)) {
+        if (recipes[i].name.toLowerCase().includes(valueInput) || recipes[i].description.toLowerCase().includes(valueInput)) {
           tabResults.push(i);
           ifValueFind = true;
         }
@@ -61,14 +61,6 @@ function displayGoodRecipe(valueInput, recipes) {
             tabResults.push(i);
             ifValueFind = true;
           }
-        }
-      }
-
-      //Controle description
-      if (ifValueFind === false) {
-        if (recipes[i].description.toLowerCase().includes(valueInput)) {
-          tabResults.push(i);
-          ifValueFind = true;
         }
       }
     }
