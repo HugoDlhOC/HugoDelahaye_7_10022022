@@ -51,11 +51,11 @@ function displayGoodRecipe(valueInput, recipes) {
         }
       }
 
-      //Controle ingredients -- some a utiliser 
+      //Controle ingredients
       if (ifValueFind === false) {
-        if(ifValueFind = recipe.ingredients.some(ingredients => ingredients.ingredient.toLowerCase().includes(valueInput))){
+        if(ifValueFind === recipe.ingredients.some(ingredients => ingredients.ingredient.toLowerCase().includes(valueInput))){
           tabResults.push(index);
-        };
+        }
       }
     });
 
@@ -101,13 +101,13 @@ function displayGoodRecipe(valueInput, recipes) {
 
 //Fonctionalitée de tri des recettes pour le champs de recherche secondaire Ingrédients
 const inputSortMenuIngredientsDisplay = document.querySelector(
-  `#input-ingredients--display`
+  "#input-ingredients--display"
 );
 const inputSortMenuMachinesDisplay = document.querySelector(
-  `#input-machines--display`
+  "#input-machines--display"
 );
 const inputSortMenuUtensilsDisplay = document.querySelector(
-  `#input-utensils--display`
+  "#input-utensils--display"
 );
 inputSortMenuIngredientsDisplay.addEventListener("input", (e) => {
   fctSecondarySearchSort(e, "ingredient");
