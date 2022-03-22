@@ -160,6 +160,7 @@ const tagsIngredientsDiv = document.querySelectorAll(".ingredient-tag");
 ingredientsItemsLinks.forEach((link) => {
   link.addEventListener("click", () => {
     fctEventLinkItemIngredient(link);
+    inputSortMenuIngredientsDisplay.value = "";
   });
 
   function fctEventLinkItemIngredient(link) {
@@ -178,6 +179,7 @@ const tagsMachinesDiv = document.querySelectorAll(".machine-tag");
 machinesItemsLinks.forEach((link) => {
   link.addEventListener("click", () => {
     fctEventLinkItemMachine(link);
+    inputSortMenuMachinesDisplay.value = "";
   });
 
   function fctEventLinkItemMachine(link) {
@@ -196,6 +198,7 @@ const tagsUtensilsDiv = document.querySelectorAll(".utensil-tag");
 utensilsItemsLinks.forEach((link) => {
   link.addEventListener("click", () => {
     fctEventLinkItemUtensil(link);
+    inputSortMenuUtensilsDisplay.value = "";
   });
 
   function fctEventLinkItemUtensil(link) {
