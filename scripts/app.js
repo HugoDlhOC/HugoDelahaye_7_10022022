@@ -29,12 +29,11 @@ let ingredientsItemsLinks = document.querySelectorAll(".ingredient a");
 let machinesItemsLinks = document.querySelectorAll(".machine a");
 let utensilsItemsLinks = document.querySelectorAll(".utensil a");
 
-
 /**
  * Cette fonction controle si la valeur tapée dans le champs de recherche principal correspond à une ou * plusieurs recette par le controle de son nom, de sa description et de ses ingrédients.
  * @param { any } valueInput
  * @param { any } recipes
- * @return {number[]} 
+ * @return {number[]}
  */
 function displayGoodRecipe(valueInput, recipes) {
   let tabResults = [];
@@ -44,7 +43,10 @@ function displayGoodRecipe(valueInput, recipes) {
       let ifValueFind = false; //Permet d'éviter les doublons
       //Controle nom - description
       if (ifValueFind === false) {
-        if (recipes[i].name.toLowerCase().includes(valueInput) || recipes[i].description.toLowerCase().includes(valueInput)) {
+        if (
+          recipes[i].name.toLowerCase().includes(valueInput) ||
+          recipes[i].description.toLowerCase().includes(valueInput)
+        ) {
           tabResults.push(i);
           ifValueFind = true;
         }
@@ -88,9 +90,15 @@ function displayGoodRecipe(valueInput, recipes) {
     for (let i = 0; i < recipes.length; i++) {
       tabResults.push(i);
     }
-    for(let i = 0; i < document.querySelectorAll(".recipe-card article").length; i++){
-      document.querySelectorAll(".recipe-card article")[i].classList.remove("display-none");
-      document.querySelectorAll(".recipe-card article")[i].classList.add("display-block");
+    for (
+      let i = 0;
+      i < document.querySelectorAll(".recipe-card article").length;
+      i++
+    ) {
+      document
+        .querySelectorAll(".recipe-card article")[i].classList.remove("display-none");
+      document
+        .querySelectorAll(".recipe-card article")[i].classList.add("display-block");
     }
   }
   if (tabResults.length === 0) {
@@ -266,7 +274,7 @@ function addItemsSecondaryMenus(indexOfGoodRecipes) {
       collectionUtensilsPrimarySearchRecipe.add(recipes[value].ustensils[i]);
     }
   });
-  
+
   //Ne plus afficher les ingrédients/machines/ustentils qui ne sont pas contenu dans les recettes recherchées au champs de recherche principal
   //Ustensiles
   utensilsItems.forEach((utensilItem) => {
@@ -292,7 +300,7 @@ function addItemsSecondaryMenus(indexOfGoodRecipes) {
  * @param { NodeList } tagTypeOfItemDiv
  * @return { any }
  */
- function filterForItems(
+function filterForItems(
   activeRecipes,
   typeOfFilter,
   selectedTypeOfItem,
@@ -303,13 +311,13 @@ function addItemsSecondaryMenus(indexOfGoodRecipes) {
   if (selectedTypeOfItem.size !== 0) {
     let badRecipes = [];
     //Pour toutes les recettes actives
-    activeRecipes.forEach(activeRecipe => {
+    activeRecipes.forEach((activeRecipe) => {
       const recipe = recipes[activeRecipe];
       let control = true;
       let activeFilter = "";
 
       //Pour tous les tags d'ingrédients actifs
-      Array.from(selectedTypeOfItem).forEach(selectedItem => {
+      Array.from(selectedTypeOfItem).forEach((selectedItem) => {
         const selectedActiveItem = selectedItem; //Récupération machine active
 
         tagsTypeOfItemSpan.forEach((tagTypeOfItemSpan, index) => {
@@ -323,19 +331,21 @@ function addItemsSecondaryMenus(indexOfGoodRecipes) {
 
         if (typeOfFilter === "ingredient") {
           //Ajout des ingrédients
-          activeFilter = recipe.ingredients.reduce((accumulator, currentValue) => {
-            return accumulator + currentValue.ingredient + " ";
-          }, "");
+          activeFilter = recipe.ingredients.reduce(
+            (accumulator, currentValue) => {
+              return accumulator + currentValue.ingredient + " ";
+            },
+            ""
+          );
         } else if (typeOfFilter === "machine") {
           //Ajout des appareils
           activeFilter += recipe.appliance;
         } else if (typeOfFilter === "utensil") {
           //Ajout des ustensils
-          recipe.ustensils.forEach(ustensils => {
+          recipe.ustensils.forEach((ustensils) => {
             activeFilter += ustensils + " ";
           });
-        }
-        else{
+        } else {
           console.log("The tag type is not known.");
         }
 
@@ -372,10 +382,9 @@ function addItemsSecondaryMenus(indexOfGoodRecipes) {
 
 /**
  * Fonction qui lance la fonction de filtrage 3 fois (pour chaque type d'items)
- * @param { any } activeRecipes 
+ * @param { any } activeRecipes
  */
 function filterForIngredientsMachinesUtensils(activeRecipes) {
-
   activeRecipes = filterForItems(
     activeRecipes,
     "ingredient",
@@ -448,7 +457,6 @@ function deleteFilter(e, index, collectionOfElements, elementsTagsSpan) {
     "display-none"
   );
   collectionOfElements.forEach((selectElement) => {
-
     //Si l'élément séléctionné est égal à la valeur HTML du tag affiché, alors on supprime l'élément du Set.
     if (selectElement === elementsTagsSpan[index].innerHTML) {
       collectionOfElements.delete(elementsTagsSpan[index].innerHTML);
