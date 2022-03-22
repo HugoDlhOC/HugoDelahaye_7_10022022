@@ -143,7 +143,7 @@ function fctSecondarySearchSort(e, typeOfItem) {
   const itemsDisplay = document.getElementsByClassName(
     `${typeOfItem} display-block`
   );
-  let inputUser = e.target.value.trim();
+  let inputUser = e.target.value.trim().toLowerCase();
 
   //Masquer tous les autres éléments
   for (let i = 0; i < itemsDisplay.length; i++) {
