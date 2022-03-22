@@ -359,6 +359,11 @@ function addItemsSecondaryMenus(indexOfGoodRecipes) {
       }
     }
   }
+  if (activeRecipes.length === 0) {
+    displayMessageRecipeNoFound();
+  } else {
+    hideMessageRecipeNoFound();
+  }
   return activeRecipes;
 }
 
