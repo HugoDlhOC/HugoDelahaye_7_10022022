@@ -29,12 +29,11 @@ let ingredientsItemsLinks = document.querySelectorAll(".ingredient a");
 let machinesItemsLinks = document.querySelectorAll(".machine a");
 let utensilsItemsLinks = document.querySelectorAll(".utensil a");
 
-
 /**
  * Cette fonction controle si la valeur tapée dans le champs de recherche principal correspond à une ou * plusieurs recette par le controle de son nom, de sa description et de ses ingrédients.
  * @param { any } valueInput
  * @param { any } recipes
- * @return {number[]} 
+ * @return {number[]}
  */
 function displayGoodRecipe(valueInput, recipes) {
   let tabResults = [];
@@ -45,7 +44,16 @@ function displayGoodRecipe(valueInput, recipes) {
 
       //Controle nom - description
       if (ifValueFind === false) {
-        if(String(Array(recipe).filter(recipe => recipe.name.toLowerCase().includes(valueInput) || recipe.description.toLowerCase().includes(valueInput))) !== ""){ //Si le résultat n'est pas vide, alors recette valide
+        if (
+          String(
+            Array(recipe).filter(
+              (recipe) =>
+                recipe.name.toLowerCase().includes(valueInput) ||
+                recipe.description.toLowerCase().includes(valueInput)
+            )
+          ) !== ""
+        ) {
+          //Si le résultat n'est pas vide, alors recette valide
           tabResults.push(index);
           ifValueFind = true;
         }
@@ -53,24 +61,27 @@ function displayGoodRecipe(valueInput, recipes) {
 
       //Controle ingredients
       if (ifValueFind === false) {
-        if(recipe.ingredients.some(ingredients => ingredients.ingredient.toLowerCase().includes(valueInput))){
+        if (
+          recipe.ingredients.some((ingredients) =>
+            ingredients.ingredient.toLowerCase().includes(valueInput)
+          )
+        ) {
           tabResults.push(index);
           ifValueFind = true;
         }
       }
     });
 
-
     let articlesRecipes = document.querySelectorAll(".recipe-card article");
     //Affichage des bonnes recettes
     //Tous les articles passent en display none
-    articlesRecipes.forEach(articleRecipe => {
+    articlesRecipes.forEach((articleRecipe) => {
       articleRecipe.classList.remove("display-block");
       articleRecipe.classList.add("class", "display-none");
     });
 
     //Seules les bonnes recettes sont affichées
-    tabResults.forEach(result => {
+    tabResults.forEach((result) => {
       articlesRecipes[result].classList.replace(
         "display-none",
         "display-block"
@@ -93,7 +104,6 @@ function displayGoodRecipe(valueInput, recipes) {
   } else {
     hideMessageRecipeNoFound();
   }
-
 
   filterForIngredientsMachinesUtensils(tabResults);
 
@@ -262,7 +272,7 @@ function addItemsSecondaryMenus(indexOfGoodRecipes) {
       collectionUtensilsPrimarySearchRecipe.add(recipes[value].ustensils[i]);
     }
   });
-  
+
   //Ne plus afficher les ingrédients/machines/ustentils qui ne sont pas contenu dans les recettes recherchées au champs de recherche principal
   //Ustensiles
   utensilsItems.forEach((utensilItem) => {
@@ -299,13 +309,13 @@ function filterForItems(
   if (selectedTypeOfItem.size !== 0) {
     let badRecipes = [];
     //Pour toutes les recettes actives
-    activeRecipes.forEach(activeRecipe => {
+    activeRecipes.forEach((activeRecipe) => {
       const recipe = recipes[activeRecipe];
       let control = true;
       let activeFilter = "";
 
       //Pour tous les tags d'ingrédients actifs
-      Array.from(selectedTypeOfItem).forEach(selectedItem => {
+      Array.from(selectedTypeOfItem).forEach((selectedItem) => {
         const selectedActiveItem = selectedItem; //Récupération machine active
 
         tagsTypeOfItemSpan.forEach((tagTypeOfItemSpan, index) => {
@@ -319,19 +329,21 @@ function filterForItems(
 
         if (typeOfFilter === "ingredient") {
           //Ajout des ingrédients
-          activeFilter = recipe.ingredients.reduce((accumulator, currentValue) => {
-            return accumulator + currentValue.ingredient + " ";
-          }, "");
+          activeFilter = recipe.ingredients.reduce(
+            (accumulator, currentValue) => {
+              return accumulator + currentValue.ingredient + " ";
+            },
+            ""
+          );
         } else if (typeOfFilter === "machine") {
           //Ajout des appareils
           activeFilter += recipe.appliance;
         } else if (typeOfFilter === "utensil") {
           //Ajout des ustensils
-          recipe.ustensils.forEach(ustensils => {
+          recipe.ustensils.forEach((ustensils) => {
             activeFilter += ustensils + " ";
           });
-        }
-        else{
+        } else {
           console.log("The tag type is not known.");
         }
 
@@ -368,10 +380,9 @@ function filterForItems(
 
 /**
  * Fonction qui lance la fonction de filtrage 3 fois (pour chaque type d'items)
- * @param { any } activeRecipes 
+ * @param { any } activeRecipes
  */
 function filterForIngredientsMachinesUtensils(activeRecipes) {
-
   activeRecipes = filterForItems(
     activeRecipes,
     "ingredient",
@@ -444,7 +455,6 @@ function deleteFilter(e, index, collectionOfElements, elementsTagsSpan) {
     "display-none"
   );
   collectionOfElements.forEach((selectElement) => {
-
     //Si l'élément séléctionné est égal à la valeur HTML du tag affiché, alors on supprime l'élément du Set.
     if (selectElement === elementsTagsSpan[index].innerHTML) {
       collectionOfElements.delete(elementsTagsSpan[index].innerHTML);

@@ -1,7 +1,6 @@
 import { recipes } from "../ressources/data/recipes.js";
 import { Recipe } from "./classes/Recipe.js";
 
-
 //Pour toutes les recettes, ajout de l'HTML des recettes, ainsi que des éléments des menus secondaires
 let collectionOfIngredients = new Set();
 let tabOfIngredients = [];
