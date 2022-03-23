@@ -310,10 +310,15 @@ article {
 
 .ingredients-description-recipe .description-recipe {
   width: 50%;
-  max-height: 110px;
+  /*max-height: 110px;*/
+  /*overflow: hidden;*/
+  /*text-overflow: ellipsis;*/
+  /*white-space: nowrap;*/
+  display: -webkit-box;
+  -webkit-line-clamp: 8;
+  -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  /*white-space: nowrap;*/
 }
 
 /*Classes display*/
