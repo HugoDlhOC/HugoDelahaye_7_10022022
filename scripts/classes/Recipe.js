@@ -40,7 +40,7 @@ export class Recipe {
             <ul class="list-ingredients mr-2">
                 ${ingredientsHtml}
             </ul>
-            <p class="description-recipe">${this.description}</p>
+            <p class="description-recipe" title="${this.description}">${this.description}</p>
         </div>
     </article>`;
   }
