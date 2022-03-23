@@ -201,8 +201,6 @@ header #name-site {
 }
 
 .tags-container .tag {
-  /*display: flex;*/
-
   padding: 10px 20px;
   justify-content: center;
   align-items: center;
@@ -343,5 +341,20 @@ article {
   #search-field {
     margin-left: -73px;
     margin-right: -73px;
+  }
+
+  .section-search nav {
+    display: block;
+    position: initial;
+  }
+
+  .section-search nav div {
+    margin-bottom: 20px;
+  }
+
+  .sort-menus div ul {
+    margin-top: -20px;
+    width: auto;
+    grid-template-columns: 1fr;
   }
 }
