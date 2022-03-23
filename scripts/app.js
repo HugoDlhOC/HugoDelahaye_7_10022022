@@ -39,38 +39,12 @@ function displayGoodRecipe(valueInput, recipes) {
   let tabResults = [];
 
   if (valueInput !== undefined && valueInput.length > 2) {
-    recipes.forEach((recipe, index) => {
-      let ifValueFind = false; //Permet d'éviter les doublons
 
-      //Controle nom - description
-      if (ifValueFind === false) {
-        if (
-          String(
-            Array(recipe).filter(
-              (recipe) =>
-                recipe.name.toLowerCase().includes(valueInput) ||
-                recipe.description.toLowerCase().includes(valueInput)
-            )
-          ) !== ""
-        ) {
-          //Si le résultat n'est pas vide, alors recette valide
-          tabResults.push(index);
-          ifValueFind = true;
-        }
-      }
-
-      //Controle ingredients
-      if (ifValueFind === false) {
-        if (
-          recipe.ingredients.some((ingredients) =>
-            ingredients.ingredient.toLowerCase().includes(valueInput)
-          )
-        ) {
-          tabResults.push(index);
-          ifValueFind = true;
-        }
-      }
-    });
+      let filterRecipes = recipes.filter(recipe => recipe.name.toLowerCase().includes(valueInput) || recipe.description.toLowerCase().includes(valueInput) || recipe.ingredients.some(ingredients => ingredients.ingredient.toLowerCase().includes(valueInput)));
+      
+      filterRecipes.forEach(filterRecipe => {
+        tabResults.push(filterRecipe.id - 1);
+      });
 
     let articlesRecipes = document.querySelectorAll(".recipe-card article");
     //Affichage des bonnes recettes
