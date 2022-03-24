@@ -35,15 +35,15 @@ let utensilsItemsLinks = document.querySelectorAll(".utensil a");
  * @param { any } recipes
  * @return {number[]}
  */
-function displayGoodRecipe(valueInput, recipes) {
+ function displayGoodRecipe(valueInput, recipes) {
   let tabResults = [];
 
   if (valueInput !== undefined && valueInput.length > 2) {
 
-      let filterRecipes = recipes.filter(recipe => recipe.name.toLowerCase().includes(valueInput) || recipe.description.toLowerCase().includes(valueInput) || recipe.ingredients.some(ingredients => ingredients.ingredient.toLowerCase().includes(valueInput)));
-      
-      filterRecipes.forEach(filterRecipe => {
-        tabResults.push(filterRecipe.id - 1);
+      recipes.filter((recipe, index)=> {
+        if(recipe.name.toLowerCase().includes(valueInput) || recipe.description.toLowerCase().includes(valueInput) || recipe.ingredients.some(ingredients => ingredients.ingredient.toLowerCase().includes(valueInput))){
+          tabResults.push(index);
+        }
       });
 
     let articlesRecipes = document.querySelectorAll(".recipe-card article");
