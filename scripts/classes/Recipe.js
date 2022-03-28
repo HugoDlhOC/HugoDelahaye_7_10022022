@@ -16,7 +16,7 @@ export class Recipe {
       let quantity = "";
       let unit = "";
 
-      //Vérifier si l'on a ou pas une quantité et une unité
+      //Vérifier si l'on a ou pas une quantité et une unité pour l'affichage
       if (ingredient.quantity !== undefined) {
         quantity = `: ${ingredient.quantity}`;
       }
@@ -27,6 +27,7 @@ export class Recipe {
 
       ingredientsHtml += `<li><strong>${ingredient.ingredient}</strong> ${quantity} ${unit}</li>`;
     });
+
     //Ajout de l'HTML
     let recipeCard = document.querySelector(".recipe-card");
     recipeCard.innerHTML += `<article id="${this.id}" class="col-lg-3 col-md-4 col-sm-8 m-3 display-block">
