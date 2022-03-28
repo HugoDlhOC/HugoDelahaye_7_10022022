@@ -313,7 +313,7 @@ article {
   text-overflow: ellipsis;
 }
 
-/*Classes display*/
+/*Classes qui modifient l'affichage d'éléments */
 .display-flex {
   display: flex;
 }
