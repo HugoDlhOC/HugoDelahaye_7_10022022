@@ -71,7 +71,6 @@ header #name-site {
 .sort-menus ul {
   margin-bottom: 0;
   border-radius: 0px 0px 5px 5px;
-  /*display: none;*/
   grid-template-columns: repeat(3, 1fr);
   width: 670px;
 }
@@ -252,7 +251,6 @@ header #name-site {
 article {
   border-radius: 0px 0px 5px 5px;
   background-color: #e7e7e7;
-  /*margin: 15px;*/
 }
 
 .col-lg-4 {
