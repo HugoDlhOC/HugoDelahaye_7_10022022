@@ -68,9 +68,9 @@ function displayGoodRecipe(valueInput, recipes) {
     }
 
     let articlesRecipes = document.querySelectorAll(".recipe-card article");
+
     //Affichage des bonnes recettes
     //Tous les articles passent en display none
-
     for (let i = 0; i < articlesRecipes.length; i++) {
       articlesRecipes[i].classList.remove("display-block");
       articlesRecipes[i].classList.add("class", "display-none");
@@ -132,7 +132,6 @@ inputSortMenuUtensilsDisplay.addEventListener("input", (e) => {
   fctSecondarySearchSort(e, "utensil");
 });
 
-//Cette fonction permet d'afficher les items qui correspondent à ce qui a été saisi dans les champs de recherche secondaires
 /**
  * Cette fonction permet d'afficher les items qui correspondent à ce qui a été saisi dans les champs de recherche secondaires
  * @param { any } e
